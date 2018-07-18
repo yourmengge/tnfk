@@ -1,0 +1,128 @@
+<div class="">
+  <div class="search-div history-search">
+    <span *ngIf='url === "tdgl"'>交易账户</span>
+    <input *ngIf='url === "tdgl"' type="text" [(ngModel)]='historyKeyWord.accountCode'>
+    <span>交易日期</span>
+    <input type="date" [(ngModel)]='historyKeyWord.selectDate'>
+    <button class="button" (click)='search()'>查询</button>
+    <button (click)='export()'>导出列表</button>
+  </div>
+  <div class="table-div my-scroll" *ngIf='url === "tdgl"'>
+    <table class="my-table">
+      <tr>
+        <th>
+          投顾账号
+        </th>
+        <th>
+          投顾姓名
+        </th>
+        <th>
+          日期
+        </th>
+        <th>
+          时间
+        </th>
+        <th>
+          证券代码
+        </th>
+        <th>
+          证券名称
+        </th>
+        <th>
+          操作
+        </th>
+        <th>
+          成交数量
+        </th>
+        <th>
+          成交均价
+        </th>
+        <th>
+          发生金额
+        </th>
+      </tr>
+      <tr *ngFor='let a of list'>
+        <td>
+          {{a.teamCode}}
+        </td>
+        <td>
+          {{a.teamName}}
+        </td>
+        <td>
+          {{a.productCode}}
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.profitDate | date}}
+        </td>
+        <td>
+          {{a.profitLoss | round}}
+        </td>
+        <td>
+          {{a.commissPrice | round}}
+        </td>
+        <td>
+          {{a.coefficient}}
+        </td>
+        <td>
+          {{a.coefficient}}
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="table-div my-scroll" *ngIf='url === "cpgl"'>
+    <table class="my-table">
+      <tr>
+        <th>
+          产品编号
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          盈亏日期
+        </th>
+        <th>
+          盈亏值
+        </th>
+        <th>
+          手续费
+        </th>
+        <th>
+          利用率
+        </th>
+      </tr>
+      <tr *ngFor='let a of list'>
+        <td>
+          {{a.productCode}}
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.profitDate | date}}
+        </td>
+        <td>
+          {{a.profitLoss | round}}
+        </td>
+        <td>
+          {{a.commissPrice | round}}
+        </td>
+        <td>
+          {{a.coefficient}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

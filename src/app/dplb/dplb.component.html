@@ -1,0 +1,127 @@
+<div class="">
+  <div class="search-div">
+    <span> 投顾账户</span>
+    <input type="text" [(ngModel)]='userCode'>
+    <button class="button" (click)='search()'>查询</button>
+    <button (click)='searchAll()'>查询全部</button>
+  </div>
+  <div class="table-div my-scroll">
+    <table class="my-table">
+      <tr>
+        <th>
+          产品编号
+        </th>
+        <th>
+          投顾账号
+        </th>
+        <th>
+          投顾姓名
+        </th>
+        <th>
+          委托时间
+        </th>
+        <th>
+          委托编号
+        </th>
+        <th>
+          委托状态
+        </th>
+        <th>
+          股票代码
+        </th>
+        <th>
+          股票名称
+        </th>
+        <th>
+          买卖方向
+        </th>
+        <th>
+          委托价格
+        </th>
+        <th>
+          委托数量
+        </th>
+        <th>
+          成交数量
+        </th>
+        <th>
+          成交均价
+        </th>
+        <th>
+          待平数量
+        </th>
+        <th>
+          当前盈亏
+        </th>
+        <th>
+          团队编号
+        </th>
+        <th>
+          市价
+        </th>
+        <th style="min-width: 160px;" *ngIf='roleCode!=="0"'>
+          操作
+        </th>
+      </tr>
+      <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
+        <td>
+          {{a.productCode}}
+        </td>
+        <td>
+          {{a.accountCode}}
+        </td>
+        <td>
+          {{a.accountName}}
+        </td>
+        <td>
+          {{a.appointTime}}
+        </td>
+        <td class="wtbh">
+          {{a.appointOrderCode}}
+        </td>
+        <td>
+          {{a.appointStatusDesc}}
+        </td>
+        <td>
+          {{a.stockCode}}
+        </td>
+        <td>
+          {{a.stockName}}
+        </td>
+        <td>
+          {{a.appointTypeDesc}}
+        </td>
+        <td>
+          {{a.appointPrice}}
+        </td>
+        <td>
+          {{a.appointCnt}}
+        </td>
+        <td>
+          {{a.dealCnt}}
+        </td>
+        <td>
+          {{a.dealAvrPrice}}
+        </td>
+        <td>
+          {{a.uncloseCnt}}
+        </td>
+        <td>
+          {{a.profit}}
+        </td>
+        <td>
+          {{a.teamCode}}
+        </td>
+        <td>
+          {{a.lastPrice}}
+        </td>
+        <td *ngIf='roleCode!=="0"'>
+          <span *ngIf='a.appointStatusIng' (click)='cancle(a)'>撤单</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="fpjyy-alert" *ngIf='confirm'>
+    <app-confirm [text]='confirmText' (active)='submit($event)'></app-confirm>
+  </div>
+</div>
