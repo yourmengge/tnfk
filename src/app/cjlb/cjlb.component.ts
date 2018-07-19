@@ -37,7 +37,7 @@ export class CjlbComponent extends GetListFn {
     super.export(this.static.TEAM_TRADE);
   }
 
-  stockId(stock) {
-    return stock.tradeId;
+  stockId(index) {
+    return index;
   }
 }
