@@ -13,8 +13,7 @@ export class CpccComponent extends Productlist {
   public static = new StaticData();
   constructor(public data: DataService, public http: HttpService) {
     super(data, http);
-    this.url = '/hold';
-    this.exportName = '委托列表';
+    this.url = this.static.PRODUCT_HOLD;
   }
 
   refresh() {
@@ -30,9 +29,4 @@ export class CpccComponent extends Productlist {
   history() {
     this.data.goto('main/cpgl/history');
   }
-
-  trackBy(a) {
-    return a.ableCnt;
-  }
-
 }
