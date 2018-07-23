@@ -1,4 +1,4 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
 import { StaticData } from '../static-data';
@@ -15,17 +15,6 @@ export class CpcjlbComponent extends Productlist {
     super(data, http);
     this.url = this.static.PRODUCT_TRADE;
     this.exportName = '产品成交列表';
+    this.exportUrl = '/trade';
   }
-  /**
- * 获取委托列表
- */
-  getList() {
-    this.data.clearTimeOut();
-    super.getList();
-  }
-
-  export() {
-    super.export('product/' + this.code + '/trade/export');
-  }
-
 }

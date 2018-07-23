@@ -28,19 +28,9 @@ export class ZhxxComponent implements DoCheck {
   roleCode = 2;
   confirm: boolean;
   confirmText: string;
+  actionType = 'del';
   constructor(public data: DataService, public http: HttpService) {
-    this.accountDetail = {
-      accountCode: '',
-      accountCommission: '',
-      accountName: '',
-      accountPwd: '',
-      accountStatus: 0,
-      bpLine: '',
-      closingDownLine: '',
-      isAutoShutdown: 1,
-      isEveningUp: 1,
-      teamCode: this.code
-    };
+    this.initAccountDetail();
     this.confirmText = '确定结案投顾？';
     this.confirm = this.data.hide;
     this.checkId = '';
@@ -54,6 +44,7 @@ export class ZhxxComponent implements DoCheck {
     this.userCode = this.data.userCode;
     this.alert = this.data.hide;
     this.textType = '新增';
+
   }
 
   ngDoCheck() {
@@ -113,84 +104,73 @@ export class ZhxxComponent implements DoCheck {
 
   close() {
     if (this.textType === '新增') {
-      this.accountDetail = {
-        accountCode: '',
-        accountCommission: '',
-        accountName: '',
-        accountPwd: '',
-        accountStatus: 0,
-        bpLine: '',
-        closingDownLine: '',
-        isAutoShutdown: 1,
-        teamCode: this.code,
-        isEveningUp: 1
-      };
+      this.initAccountDetail();
     }
     this.resetAlert = this.data.hide;
     this.alert = this.data.hide;
   }
 
-  add() {
+  initAccountDetail() {
     this.accountDetail = {
       accountCode: '',
       accountCommission: '',
       accountName: '',
       accountPwd: '',
-      accountStatus: 0,
-      bpLine: '',
-      closingDownLine: '',
-      isAutoShutdown: 1,
-      teamCode: this.code,
-      isEveningUp: 1
+      allottedScale: '',
+      cordonLine: '',
+      flatLine: '',
+      productCode: '',
+      cashScale: '',
+      status: '',
+      teamCode: this.code
     };
+  }
+
+  add() {
+    this.initAccountDetail();
     this.textType = '新增';
     this.alert = this.data.show;
   }
 
   addSubmit() {
+    this.accountDetail.teamCode = this.code;
+    console.log(this.accountDetail.allottedScale);
     if (this.textType === '新增') {
       if (this.accountDetail.accountCode === '') {
-        this.data.ErrorMsg('交易账号不能为空');
+        this.data.ErrorMsg('投顾账号不能为空');
       } else if (this.accountDetail.accountName === '') {
-        this.data.ErrorMsg('中文名字不能为空');
+        this.data.ErrorMsg('投顾姓名不能为空');
       } else if (!this.data.accountValid.test(this.accountDetail.accountCode)) {
-        this.data.ErrorMsg('交易员编号不能为中文和特殊字符，只能是数字字母下划线');
+        this.data.ErrorMsg('投顾账号不能为中文和特殊字符，只能是数字字母下划线');
       } else if (this.accountDetail.accountPwd === '') {
-        this.data.ErrorMsg('交易员密码不能为空');
-      } else if (this.accountDetail.bpLine === '') {
-        this.data.ErrorMsg('BP值不能为空');
-      } else if (this.accountDetail.bpLine === null) {
-        this.data.ErrorMsg('BP值只能为数字');
-      } else if (this.accountDetail.closingDownLine === '') {
-        this.data.ErrorMsg('停机位不能为空');
-      } else if (this.accountDetail.closingDownLine === null) {
-        this.data.ErrorMsg('停机位只能为数字');
-      } else if (this.accountDetail.accountCommission === '') {
-        this.data.ErrorMsg('交易佣金不能为空');
-      } else if (this.accountDetail.accountCommission === null) {
-        this.data.ErrorMsg('交易佣金只能为数字');
+        this.data.ErrorMsg('投顾密码不能为空');
+      } else if (this.data.isNull(this.accountDetail.allottedScale)) {
+        this.data.ErrorMsg('期初规模必填且只能为数字');
+      } else if (this.data.isNull(this.accountDetail.cashScale)) {
+        this.data.ErrorMsg('保证金必填且只能为数字');
+      } else if (this.data.isNull(this.accountDetail.flatLine) || this.accountDetail.flatLine < 0 || this.accountDetail.flatLine > 1) {
+        this.data.ErrorMsg('平仓线比例必填且只能为0-1的数字');
+        // tslint:disable-next-line:max-line-length
+      } else if (this.data.isNull(this.accountDetail.cordonLine) || this.accountDetail.cordonLine < 0 || this.accountDetail.cordonLine > 1) {
+        this.data.ErrorMsg('警戒线比例必填且只能为0-1的数字');
+      } else if (this.data.isNull(this.accountDetail.accountCommission)) {
+        this.data.ErrorMsg('交易佣金必填且只能为数字');
       } else {
-        this.accountDetail.teamCode = this.code;
+        this.accountDetail.status = 0;
         this.accountDetail.accountPwd = Md5.hashStr(this.accountDetail.accountPwd);
         this.submit(this.accountDetail, 'ADD', '添加');
       }
     } else {
       if (this.accountDetail.accountName === '') {
-        this.data.ErrorMsg('中文名字不能为空');
-      } else if (this.accountDetail.bpLine === '') {
-        this.data.ErrorMsg('BP值不能为空');
-      } else if (this.accountDetail.bpLine === null) {
-        this.data.ErrorMsg('BP值只能为数字');
-      } else if (this.accountDetail.closingDownLine === '') {
-        this.data.ErrorMsg('停机位不能为空');
-      } else if (this.accountDetail.closingDownLine === null) {
-        this.data.ErrorMsg('停机位只能为数字');
-      } else if (this.accountDetail.accountCommission === '') {
-        this.data.ErrorMsg('交易佣金不能为空');
-      } else if (this.accountDetail.accountCommission === null) {
-        this.data.ErrorMsg('交易佣金只能为数字');
+        this.data.ErrorMsg('投顾姓名不能为空');
+      } else if (this.data.isNull(this.accountDetail.flatLine) || this.accountDetail.flatLine < 0 || this.accountDetail.flatLine > 1) {
+        this.data.ErrorMsg('平仓线比例必填且只能为0-1的数字');
+        // tslint:disable-next-line:max-line-length
+      } else if (this.data.isNull(this.accountDetail.cordonLine) || this.accountDetail.cordonLine < 0 || this.accountDetail.cordonLine > 1) {
+        this.data.ErrorMsg('警戒线比例必填且只能为0-1的数字');
+      } else if (this.data.isNull(this.accountDetail.accountCommission)) {
+        this.data.ErrorMsg('交易佣金必填且只能为数字');
       } else {
-        this.accountDetail.teamCode = this.code;
         this.submit(this.accountDetail, 'UPDATE', '修改');
       }
     }
@@ -215,12 +195,14 @@ export class ZhxxComponent implements DoCheck {
       accountCommission: data.accountCommission,
       accountName: data.accountName,
       accountPwd: data.accountPwd,
-      accountStatus: data.accountStatus,
-      bpLine: data.bpLine,
-      closingDownLine: data.closingDownLine,
-      isAutoShutdown: data.isAutoShutdown,
-      teamCode: this.code,
-      isEveningUp: data.isEveningUp
+      flatLine: data.flatLine,
+      cordonLine: data.cordonLine,
+      cashScale: data.cashScale,
+      allottedScale: data.allottedScale,
+      productCode: data.productCode,
+      productName: data.productName,
+      status: data.status,
+      teamCode: this.code
     };
   }
 
@@ -234,9 +216,14 @@ export class ZhxxComponent implements DoCheck {
 
   cclb() {
     if (this.temp !== '') {
-      this.accountDetail = this.selectDetail;
+      this.data.cclbCode = this.selectDetail.accountCode;
+
       this.goto('cclb');
     }
+  }
+
+  proFit(data) {
+    return this.data.proFit(data);
   }
 
   del() {
@@ -245,22 +232,27 @@ export class ZhxxComponent implements DoCheck {
       accountCode: this.selectDetail.accountCode,
       teamCode: this.code
     };
+    this.actionType = 'del';
     this.confirm = this.data.show;
 
   }
 
   submitDelete(type) {
     if (type) {
-      this.http.delJyy(this.deleteData).subscribe((res) => {
-        this.data.ErrorMsg('删除成功');
-        this.checkId = '';
-        this.getList();
-        this.closeConfirm();
-      }, (err) => {
-        this.data.error = err.error;
-        this.data.isError();
-        this.closeConfirm();
-      });
+      if (this.actionType === 'del') {
+        this.http.delJyy(this.deleteData).subscribe((res) => {
+          this.data.ErrorMsg('结案成功');
+          this.checkId = '';
+          this.getList();
+          this.closeConfirm();
+        }, (err) => {
+          this.data.error = err.error;
+          this.data.isError();
+          this.closeConfirm();
+        });
+      } else {
+        this.resetSubmit();
+      }
     } else {
       this.closeConfirm();
     }
@@ -279,27 +271,23 @@ export class ZhxxComponent implements DoCheck {
 
   reset() {
     this.confirm = this.data.show;
+    this.actionType = 'reset';
     this.confirmText = '确定重置密码？';
   }
 
   resetSubmit() {
     const data = {
       accountCode: this.selectDetail.accountCode,
-      newPasswd: Md5.hashStr(this.newPass)
+      newPasswd: Md5.hashStr('111111')
     };
-    if (this.newPass !== '') {
-      this.http.reset(data).subscribe((res) => {
-        this.data.ErrorMsg('重置密码成功');
-        this.getList();
-        this.close();
-      }, (err) => {
-        this.data.error = err.error;
-        this.data.isError();
-      });
-    } else {
-      this.data.ErrorMsg('请输入新密码');
-    }
-
+    this.http.reset(data).subscribe((res) => {
+      this.data.ErrorMsg('重置密码成功');
+      this.getList();
+      this.closeConfirm();
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
   }
 
 

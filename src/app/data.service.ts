@@ -5,6 +5,8 @@ import { HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class DataService {
 
+  cclbCode: any;
+
   isPhone = /^0?1[3|4|5|6|7|8|9][0-9]\d{8}$/;
   alert = false;
   loading = false;
@@ -16,7 +18,7 @@ export class DataService {
   token: string;
   settimeout: any;
   settimeoutprice: any;
-  timeout = 3000;
+  timeout = 300000;
   userCode: string; // 投顾账户
 
   roleCode: string; // 0	查询权限  1	操作权限
@@ -113,6 +115,16 @@ export class DataService {
       selectDate: this.getTime('yyyy-MM-dd', new Date()),
       selectMonth: ''
     };
+  }
+
+  proFit(data) {
+    if (data === 0) {
+      return '';
+    } else if (data > 0) {
+      return 'red';
+    } else {
+      return 'green';
+    }
   }
 
   /**

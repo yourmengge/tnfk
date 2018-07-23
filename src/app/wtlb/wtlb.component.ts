@@ -15,30 +15,6 @@ export class WtlbComponent extends GetListFn {
     super(data, http);
     this.url = this.static.GET_WT_LIST;
     this.exportName = '委托列表';
+    this.exportUrl = this.static.TEAM_APPOINT;
   }
-
-  search() {
-    this.searchCode = this.userCode;
-    this.data.userCode = this.searchCode;
-    this.getList();
-  }
-
-  export() {
-    super.export('product/' + this.code + '/appoint/export');
-  }
-
-
-  /**
-   * 获取委托列表
-   */
-  getList() {
-    this.data.clearTimeOut();
-    super.getList();
-  }
-
-  searchAll() {
-    this.searchCode = '';
-    this.getList();
-  }
-
 }

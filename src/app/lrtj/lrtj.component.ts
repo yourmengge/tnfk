@@ -15,33 +15,9 @@ export class LrtjComponent extends GetListFn {
     super(data, http);
     this.url = this.static.GET_TEAM_PROFIT;
     this.exportName = '利润列表';
+    this.exportUrl = this.static.TEAM_PROFIT;
   }
-
   fontColor(text) {
     return text === '买入' ? 'red' : text === '卖出' ? 'green' : '';
   }
-
-  search() {
-    this.searchCode = this.userCode;
-    this.data.userCode = this.searchCode;
-    this.getList();
-  }
-
-  /**
-   * 获取委托列表
-   */
-  getList() {
-    this.data.clearTimeOut();
-    super.getList();
-  }
-
-  searchAll() {
-    this.searchCode = '';
-    this.getList();
-  }
-
-  export() {
-    super.export(this.static.TEAM_PROFIT);
-  }
-
 }

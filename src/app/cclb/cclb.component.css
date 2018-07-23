@@ -32,7 +32,6 @@
     cursor: pointer;
 }
 
-
 .alert-content {
     display: flex;
     width: 500px;
@@ -79,12 +78,12 @@
     cursor: pointer;
 }
 
-.green {
+.green-left {
     float: left;
     color: green;
 }
 
-.red {
+.red-right {
     float: right;
     color: red;
 }

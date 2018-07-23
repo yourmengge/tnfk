@@ -41,6 +41,7 @@ export class GetListFn implements DoCheck {
 
 
     url = '';
+    exportUrl = '';
     listData: any;
     exportData: any;
     exportName: string;
@@ -51,6 +52,7 @@ export class GetListFn implements DoCheck {
 
     }
     getList() {
+        this.data.clearTimeOut();
         this.listData = {
             teamCode: this.code,
             accountCode: this.searchCode
@@ -66,9 +68,9 @@ export class GetListFn implements DoCheck {
         });
     }
 
-    export(url) {
+    export() {
         this.exportData = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
-        this.http.export(url, this.exportData).subscribe((res) => {
+        this.http.export(this.exportUrl, this.exportData).subscribe((res) => {
             console.log(res);
             this.data.downloadFile(res, this.exportName);
         }, (err) => {
@@ -131,6 +133,11 @@ export class GetListFn implements DoCheck {
             this.data.error = err.error;
             this.data.isError();
         });
+    }
+
+    searchAll() {
+        this.searchCode = '';
+        this.getList();
     }
 
 

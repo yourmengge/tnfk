@@ -16,40 +16,6 @@ export class DplbComponent extends GetListFn {
     this.url = this.static.GET_CLOSE;
   }
 
-  search() {
-    this.searchCode = this.userCode;
-    this.data.userCode = this.searchCode;
-    this.getList();
-  }
-
-  getList() {
-    this.data.clearTimeOut();
-    super.getList();
-  }
-
-  searchAll() {
-    this.searchCode = '';
-    this.getList();
-  }
-
-  sell(a) {
-    this.confirmText = '确认平仓？';
-    this.sellType = 'SELL';
-    this.resData = {
-      productCode: a.productCode,
-      teamCode: this.code,
-      accountCode: a.accountCode,
-      stockCode: a.stockCode,
-      appointPrice: a.appointPrice,
-      appointCnt: a.uncloseCnt
-    };
-    if (a.appointType === 2) {
-      this.sellType = 'BUY';
-    }
-    this.actionType = 'sell';
-    this.confirm = this.data.show;
-  }
-
   cancle(a) {
     this.confirmText = '确认撤单？';
     this.resData = {
@@ -66,27 +32,15 @@ export class DplbComponent extends GetListFn {
 
   submit(type) {
     if (type) { // confirm返回true表示点击确认
-      if (this.actionType === 'sell') {
-        this.http.appointSELL(this.resData, this.sellType).subscribe((res) => {
-          this.getList();
-          this.data.ErrorMsg('平仓已提交');
-          this.closeConfirm();
-        }, (err) => {
-          this.data.error = err.error;
-          this.data.isError();
-          this.closeConfirm();
-        });
-      } else {
-        this.http.appointCancel(this.resData).subscribe((res) => {
-          this.getList();
-          this.data.ErrorMsg('撤单已提交');
-          this.closeConfirm();
-        }, (err) => {
-          this.data.error = err.error;
-          this.data.isError();
-          this.closeConfirm();
-        });
-      }
+      this.http.appointCancel(this.resData).subscribe((res) => {
+        this.getList();
+        this.data.ErrorMsg('撤单已提交');
+        this.closeConfirm();
+      }, (err) => {
+        this.data.error = err.error;
+        this.data.isError();
+        this.closeConfirm();
+      });
     } else {
       this.closeConfirm();
     }

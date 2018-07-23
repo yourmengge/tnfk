@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
+import { GetListFn } from '../get-list-fn';
+import { StaticData } from '../static-data';
 
 @Component({
   selector: 'app-cclb',
   templateUrl: './cclb.component.html',
   styleUrls: ['./cclb.component.css']
 })
-export class CclbComponent implements OnInit {
+export class CclbComponent extends GetListFn {
+  public static = new StaticData();
   resetAlert: boolean;
   fullcount: any;
   ccount: any;
@@ -15,8 +18,10 @@ export class CclbComponent implements OnInit {
   classType: string;
   appointCnt: any;
   constructor(public data: DataService, public http: HttpService) {
-    this.resetAlert = this.data.show;
+    super(data, http);
+    this.resetAlert = this.data.hide;
     this.fullcount = 10000;
+    this.url = 'hold/' + this.data.cclbCode;
   }
 
   sell() {
@@ -27,7 +32,13 @@ export class CclbComponent implements OnInit {
     this.resetAlert = this.data.hide;
   }
 
-  ngOnInit() {
+  getList() {
+    this.data.clearTimeOut();
+    super.getList();
+  }
+
+  proFit(data) {
+    return this.data.proFit(data);
   }
 
   /**
@@ -59,6 +70,20 @@ export class CclbComponent implements OnInit {
     }
 
   }
+
+  // /**
+  //    * 增加减少买入价
+  //    */
+  // count(type) {
+  //   if (!this.data.isNull(this.appointPrice)) {
+  //     if (type === -1 && this.appointPrice > 0 && this.appointPrice > this.stockHQ.lowPrice) {
+  //       this.appointPrice = this.appointPrice - 0.01;
+  //     } else if (type === 1 && this.appointPrice < this.stockHQ.highPrice) {
+  //       this.appointPrice = this.appointPrice + 0.01;
+  //     }
+  //     this.appointPrice = parseFloat(this.appointPrice.toFixed(2));
+  //   }
+  // }
 
 
   /**

@@ -31,28 +31,27 @@
           操作
         </th>
       </tr>
-      <tr>
-
+      <tr *ngFor='let a of list;let i = index;'>
         <td>
-          112
+          {{a.stockCode}}
         </td>
         <td>
-          112
+          {{a.stockName}}
         </td>
         <td>
-          112
+          {{a.stockCnt}}
         </td>
         <td>
-          112
+          {{a.stockCntAble}}
+        </td>
+        <td [class]='proFit(a.profit)'>
+          {{a.profit}}
         </td>
         <td>
-          112
+          {{a.costPrice}}
         </td>
         <td>
-          112
-        </td>
-        <td>
-          112
+          {{a.lastPrice}}
         </td>
         <td>
           <span (click)='sell(a)'>平仓</span>
@@ -73,12 +72,12 @@
         </div>
         <div class="add-down">
           <div class="down" (click)='count(-1)'>-</div>
-          <input class="input" type="number" placeholder="卖出价"  style="text-align: center">
+          <input class="input" type="number" placeholder="卖出价" style="text-align: center">
           <div class="add" (click)='count(1)'>+</div>
         </div>
         <div class="green-red">
-          <span class="green" (click)='selectPrice(stockHQ.lowPrice)'>跌停 </span>
-          <span class="red" (click)='selectPrice(stockHQ.highPrice)'>涨停 </span>
+          <span class="green-left" (click)='selectPrice(stockHQ.lowPrice)'>跌停 </span>
+          <span class="red-right" (click)='selectPrice(stockHQ.highPrice)'>涨停 </span>
         </div>
         <div>
           <input class="input" type="number" placeholder="卖出量" [(ngModel)]='appointCnt' (keyup)='inputCnt()'>

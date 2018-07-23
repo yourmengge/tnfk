@@ -15,26 +15,7 @@ export class CjlbComponent extends GetListFn {
     super(data, http);
     this.url = this.static.GET_TRADE;
     this.exportName = '成交列表';
-  }
-
-  search() {
-    this.searchCode = this.userCode;
-    this.data.userCode = this.searchCode;
-    this.getList();
-  }
-
-  getList() {
-    this.data.clearTimeOut();
-    super.getList();
-  }
-
-  searchAll() {
-    this.searchCode = '';
-    this.getList();
-  }
-
-  export() {
-    super.export(this.static.TEAM_TRADE);
+    this.exportUrl = this.static.TEAM_TRADE;
   }
 
   stockId(index) {

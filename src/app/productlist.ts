@@ -8,9 +8,9 @@ export class Productlist implements DoCheck {
     userCode: any;
     searchCode: any;
     url: string;
-    checkList = [];
     exportData: any;
     exportName: string;
+    exportUrl: string;
     constructor(public data: DataService, public http: HttpService) {
     }
     check() {
@@ -33,6 +33,7 @@ export class Productlist implements DoCheck {
     }
 
     getList() {
+        this.data.clearTimeOut();
         this.http.getProductList(this.code, this.url).subscribe((res) => {
             this.list = res;
             this.data.settimeout = setTimeout(() => {
@@ -44,9 +45,9 @@ export class Productlist implements DoCheck {
         });
     }
 
-    export(url) {
+    export() {
         this.exportData = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
-        this.http.export(url, this.exportData).subscribe((res) => {
+        this.http.export('product/' + this.code + this.exportUrl, this.exportData).subscribe((res) => {
             console.log(res);
             this.data.downloadFile(res, this.exportName);
         }, (err) => {

@@ -82,37 +82,37 @@
           {{a.bpLine}}
         </td> -->
         <td>
-          {{a.closingDownLine}}
-        </td>
-        <td>
-          {{a.accountStatusDesc}}
-        </td>
-        <td>
-          {{a.isAutoShutdown === 1?'是':'否'}}
-        </td>
-        <td>
-          {{a.isEveningUp === 1?'是':'否'}}
-        </td>
-        <td>
           {{a.accountCommission}}
         </td>
         <td>
+          {{a.productName}}
+        </td>
+        <td>
+          {{a.allottedScale}}
+        </td>
+        <td>
+          {{a.cashScale}}
+        </td>
+        <td>
+          {{a.flatLine}}
+        </td>
+        <td>
+          {{a.cordonLine}}
+        </td>
+        <td>
+          {{a.totalScale}}
+        </td>
+        <td>
+          {{a.ableScale}}
+        </td>
+        <td>
+          {{a.lockScale}}
+        </td>
+        <td>
+          {{a.marketValue}}
+        </td>
+        <td [class]='proFit(a.profit)'>
           {{a.profit}}
-        </td>
-        <td>
-          {{a.dealAmount}}
-        </td>
-        <td>
-          {{a.profitRate}}
-        </td>
-        <td>
-          {{a.profitRate}}
-        </td>
-        <td>
-          {{a.profitRate}}
-        </td>
-        <td>
-          {{a.profitRate}}
         </td>
         <td class="{{a.onlineStatus === '在线'?'red':''}}">
           {{a.onlineStatus}}
@@ -142,6 +142,12 @@
         </div>
       </div>
       <div class="flex-alert">
+        <div class="flex-name" *ngIf='textType === "修改"'>
+          团队编码
+        </div>
+        <div class="flex-content" *ngIf='textType === "修改"'>
+          <input type="text" [(ngModel)]='accountDetail.productCode' [readonly]='textType === "修改"'>
+        </div>
         <div class="flex-name" *ngIf='textType !== "修改"'>
           投顾密码
         </div>
@@ -152,7 +158,7 @@
           所属产品
         </div>
         <div class="flex-content">
-          <input type="text" [(ngModel)]='accountDetail.accountPwd' readonly>
+          <input type="text" [(ngModel)]='accountDetail.productCode' [readonly]='textType === "修改"'>
         </div>
       </div>
       <div class="flex-alert">
@@ -160,13 +166,13 @@
           期初规模(元)
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.bpLine'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.allottedScale' [readonly]='textType === "修改"'>
         </div>
         <div class="flex-name">
           保证金(元)
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.closingDownLine'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.cashScale' [readonly]='textType === "修改"'>
         </div>
       </div>
       <div class="flex-alert">
@@ -174,13 +180,13 @@
           平仓线比例
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.accountCommission'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.flatLine'>
         </div>
         <div class="flex-name">
           警戒线比例
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.accountCommission'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.cordonLine'>
         </div>
       </div>
       <div class="flex-alert">
@@ -193,11 +199,14 @@
         <div class="flex-name">
           投顾状态
         </div>
-        <div class="flex-content">
-          <select name="" id="" [(ngModel)]='accountDetail.isEveningUp'>
-            <option value="1">正常</option>
-            <option value="0">停机</option>
+        <div class="flex-content" *ngIf='textType === "修改"'>
+          <select name="" id="" [(ngModel)]='accountDetail.status'>
+            <option value="0">正常</option>
+            <option value="1">停机</option>
           </select>
+        </div>
+        <div class="flex-content" *ngIf='textType !== "修改"'>
+          正常
         </div>
       </div>
       <div class="button-div">

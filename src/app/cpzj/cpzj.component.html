@@ -28,7 +28,7 @@
           本次可分配资金
         </th>
       </tr>
-      <tr *ngFor='let a of list;let i = index;trackBy:trackBy'>
+      <tr *ngFor='let a of list;let i = index;'>
         <td (click)='checkbox(i)'>
           <input type="checkbox" name="" id="" [(checked)]='a.isChecked'>
         </td>
