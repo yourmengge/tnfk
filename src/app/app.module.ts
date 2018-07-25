@@ -41,6 +41,9 @@ import { NumberInputDirective } from './number-input.directive';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { CpzjComponent } from './cpzj/cpzj.component';
 import { CclbComponent } from './cclb/cclb.component';
+import { ToFixedPipe } from './to-fixed.pipe';
+import { NumIntPipe } from './num-int.pipe';
+import { OrderByPipe } from './order-by.pipe';
 
 const historyChild: Routes = [
   { path: 'lslyl', component: LslylComponent },
@@ -68,7 +71,7 @@ const tdglChild: Routes = [
   { path: 'wtlb', component: WtlbComponent },
   { path: 'fplb', component: FplbComponent },
   { path: 'zhxx', component: ZhxxComponent },
-  { path: 'cclb', component: CclbComponent },
+  { path: 'cclb/:id', component: CclbComponent },
   { path: '', redirectTo: 'zhxx', pathMatch: 'full' }
 ];
 
@@ -121,7 +124,10 @@ const appRoutes: Routes = [
     NumberInputDirective,
     ConfirmComponent,
     CpzjComponent,
-    CclbComponent
+    CclbComponent,
+    ToFixedPipe,
+    NumIntPipe,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,

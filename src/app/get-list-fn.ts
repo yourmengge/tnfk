@@ -100,6 +100,8 @@ export class GetListFn implements DoCheck {
         this.check();
     }
 
+
+
     getListGHLB() {
         this.listData = {
             teamCode: this.code,
@@ -108,11 +110,11 @@ export class GetListFn implements DoCheck {
         this.http.getList(this.url, this.listData).subscribe((res) => {
             for (const i in res) {
                 if (this.data.isNullArray(this.list)) { // 判断是否为第一次获取到数据
-                    res[i].bcgh = res[i].ableCnt;
+                    res[i].bcgh = res[i].ableScale;
                 } else if (this.checkList.includes(i)) {
                     res[i].bcgh = this.list[i].bcgh;
                 } else {
-                    res[i].bcgh = res[i].ableCnt;
+                    res[i].bcgh = res[i].ableScale;
                 }
             }
             this.list = res;

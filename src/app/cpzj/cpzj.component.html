@@ -1,14 +1,11 @@
 <div>
   <div class="action-button margin-top">
-    <button [disabled]='disabled(checkList.length)' (click)='fptd()'>分配给团队</button>
+    <!-- <button [disabled]='disabled(checkList.length)' >分配给团队</button> -->
     <button (click)='refresh()'>列表刷新</button>
   </div>
   <div class="table-div my-scroll">
     <table class="my-table">
       <tr>
-        <th>
-          <input type="checkbox" name="" id="" (click)='clickAll()' [(ngModel)]='checkedAll'>
-        </th>
         <th>
           产品名称
         </th>
@@ -27,28 +24,31 @@
         <th>
           本次可分配资金
         </th>
+        <th>
+          操作
+        </th>
       </tr>
-      <tr *ngFor='let a of list;let i = index;'>
-        <td (click)='checkbox(i)'>
-          <input type="checkbox" name="" id="" [(checked)]='a.isChecked'>
-        </td>
-        <td (click)='checkbox(i)'>
-          {{a.stockNo}}
-        </td>
-        <td (click)='checkbox(i)'>
-          {{a.stockName}}
-        </td>
-        <td (click)='checkbox(i)'>
-          {{a.stockCnt}}
-        </td>
-        <td (click)='checkbox(i)'>
-          {{a.stockCnt}}
-        </td>
-        <td (click)='checkbox(i)'>
-          {{a.productCode}}
+      <tr>
+        <td>
+          {{list.productName}}
         </td>
         <td>
-          <input type="number" class="table-input" [(ngModel)]='a.ableCnt'>
+          {{list.productCode}}
+        </td>
+        <td>
+          {{list.totalBnc}}
+        </td>
+        <td>
+          {{list.availableBnc}}
+        </td>
+        <td>
+          {{list.ableScale}}
+        </td>
+        <td>
+          <input type="number" class="table-input" [(ngModel)]='list.ableCnt'>
+        </td>
+        <td>
+          <span (click)='fptd()'>分配给团队</span>
         </td>
       </tr>
     </table>

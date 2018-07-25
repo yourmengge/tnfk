@@ -42,6 +42,62 @@ export class DataService {
     selectDate: '',
     selectMonth: ''
   };
+
+  stockHQ = {
+    'closePrice': '',
+    'highPrice': '',
+    'lowPrice': '',
+    'lastPrice': '',
+    'openPrice': '',
+    'orderTime': '',
+    'preClosePrice': '',
+    'stockCode': '',
+    'buyLevel': {
+      'buyPrice01': '--',
+      'buyPrice02': '--',
+      'buyPrice03': '--',
+      'buyPrice04': '--',
+      'buyPrice05': '--',
+      'buyPrice06': '--',
+      'buyPrice07': '--',
+      'buyPrice08': '--',
+      'buyPrice09': '--',
+      'buyPrice10': '--',
+      'buyVolume01': '--',
+      'buyVolume02': '--',
+      'buyVolume03': '--',
+      'buyVolume04': '--',
+      'buyVolume05': '--',
+      'buyVolume06': '--',
+      'buyVolume07': '--',
+      'buyVolume08': '--',
+      'buyVolume09': '--',
+      'buyVolume10': '--'
+    },
+    'sellLevel': {
+      'sellPrice01': '--',
+      'sellPrice02': '--',
+      'sellPrice03': '--',
+      'sellPrice04': '--',
+      'sellPrice05': '--',
+      'sellPrice06': '--',
+      'sellPrice07': '--',
+      'sellPrice08': '--',
+      'sellPrice09': '--',
+      'sellPrice10': '--',
+      'sellVolume01': '--',
+      'sellVolume02': '--',
+      'sellVolume03': '--',
+      'sellVolume04': '--',
+      'sellVolume05': '--',
+      'sellVolume06': '--',
+      'sellVolume07': '--',
+      'sellVolume08': '--',
+      'sellVolume09': '--',
+      'sellVolume10': '--'
+    }
+
+  };
   constructor(public router: Router) {
     this.teamCode = '';
     this.userCode = '';
@@ -75,6 +131,25 @@ export class DataService {
    */
   goto(url) {
     return this.router.navigate([url]);
+  }
+
+    /**
+   * 判断有几位小数
+   */
+  Decimal(num) {
+    num = num + '';
+    if (num.indexOf('.') !== -1) {
+      return num.split('.')[1].length;
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * 带参数的页面跳转
+   */
+  gotoId(url, id) {
+    this.router.navigate([url, id]);
   }
 
   getUserName() {

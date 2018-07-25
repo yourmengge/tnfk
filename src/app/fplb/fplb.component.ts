@@ -27,7 +27,7 @@ export class FplbComponent implements DoCheck {
     this.confirm = this.data.hide;
     this.ghArray = [];
     this.listData = {
-      ableCnt: '',
+      ableScale: '',
       productCode: '',
       productName: '',
       stockCnt: '',
@@ -71,14 +71,14 @@ export class FplbComponent implements DoCheck {
     this.http.getHold(this.code).subscribe((res) => {
       for (const i in res) {
         if (this.data.isNullArray(this.list)) { // 判断是否为第一次获取到数据
-          res[i].ghcp = res[i].ableCnt;
-          res[i].bcfp = res[i].ableCnt;
+          res[i].ghcp = res[i].ableScale;
+          res[i].bcfp = res[i].ableScale;
         } else if (this.checkList.includes(i)) {
           res[i].bcfp = this.list[i].bcfp;
           res[i].ghcp = this.list[i].ghcp;
         } else {
-          res[i].ghcp = res[i].ableCnt;
-          res[i].bcfp = res[i].ableCnt;
+          res[i].ghcp = res[i].ableScale;
+          res[i].bcfp = res[i].ableScale;
         }
       }
       this.list = res;
@@ -106,27 +106,33 @@ export class FplbComponent implements DoCheck {
    */
   fpjyy() {
     let i = 0;
-    this.checkList.forEach((element) => {
-      // if (this.list[element].bcfp % 100 !== this.list[element].ableCnt % 100) {
-      //   if (!this.data.is100Int(this.list[element].bcfp)) {
-      //     this.data.ErrorMsg('分配数量只能为100的整数倍');
-      //     return i = 1;
-      //   }
-      // }
+    if (this.checkList.length > 1) {
+      this.data.ErrorMsg('只能选择一个产品');
+    } else {
+      this.checkList.forEach((element) => {
+        // if (this.list[element].bcfp % 100 !== this.list[element].ableScale % 100) {
+        //   if (!this.data.is100Int(this.list[element].bcfp)) {
+        //     this.data.ErrorMsg('分配数量只能为100的整数倍');
+        //     return i = 1;
+        //   }
+        // }
 
-      if (this.list[element].bcfp <= 0) {
-        this.data.ErrorMsg('分配数量必须大于0');
-        return i = 1;
-      } else if (this.list[element].bcfp > this.list[element].ableCnt) {
-        this.data.ErrorMsg('分配数量不能大于股票数量');
-        return i = 1;
+        if (this.list[element].bcfp <= 0) {
+          this.data.ErrorMsg('分配数量必须大于0');
+          return i = 1;
+        } else if (this.list[element].bcfp > this.list[element].ableScale) {
+          this.data.ErrorMsg('分配数量不能大于股票数量');
+          return i = 1;
+        }
+
+      });
+      if (i === 0) {
+        this.alert = this.data.show;
+        this.getJyyList();
       }
-
-    });
-    if (i === 0) {
-      this.alert = this.data.show;
-      this.getJyyList();
     }
+
+
 
   }
 
@@ -211,15 +217,13 @@ export class FplbComponent implements DoCheck {
       const data = {
         teamCode: this.code,
         productCode: '',
-        stockCode: '',
-        stockNum: '',
+        ableScale: '',
         execType: 2,
         accountCode: ''
       };
       data.accountCode = this.jyyCode;
       data.productCode = this.list[element].productCode;
-      data.stockCode = this.list[element].stockCode;
-      data.stockNum = this.list[element].bcfp;
+      data.ableScale = this.list[element].bcfp;
       array.push(data);
     });
     if (!this.data.isNull(this.jyyCode)) {
@@ -239,22 +243,20 @@ export class FplbComponent implements DoCheck {
       const data = {
         teamCode: this.code,
         productCode: '',
-        stockCode: '',
-        stockNum: '',
+        ableScale: '',
         execType: 4,
         accountCode: ''
       };
       data.accountCode = this.jyyCode;
       data.productCode = this.list[element].productCode;
-      data.stockCode = this.list[element].stockCode;
       if (this.list[element].ghcp <= 0) {
         this.data.ErrorMsg('归还股票数量必须大于0！');
         return temp = 1;
-      } else if (this.list[element].ghcp > this.list[element].ableCnt) {
+      } else if (this.list[element].ghcp > this.list[element].ableScale) {
         this.data.ErrorMsg('归还股票数量不能大于股票数量！');
         return temp = 1;
       } else {
-        data.stockNum = this.list[element].ghcp;
+        data.ableScale = this.list[element].ghcp;
         this.ghArray.push(data);
       }
     });
@@ -328,6 +330,6 @@ export class FplbComponent implements DoCheck {
   }
 
   trackBy(a) {
-    return a.ableCnt;
+    return a.ableScale;
   }
 }

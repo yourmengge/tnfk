@@ -67,17 +67,17 @@
     <div class="alert-content">
       <div class="left-div">
         <div>
-          <input class="input" type="text" readonly>
-          <span class="gpmc">平安银行</span>
+          <input class="input" type="text" readonly  [(ngModel)]='stockHQ.stockCode'>
+          <span class="gpmc">{{stockName}}</span>
         </div>
         <div class="add-down">
           <div class="down" (click)='count(-1)'>-</div>
-          <input class="input" type="number" placeholder="卖出价" style="text-align: center">
+          <input class="input" type="number" placeholder="卖出价" [(ngModel)]='appointPrice' style="text-align: center">
           <div class="add" (click)='count(1)'>+</div>
         </div>
         <div class="green-red">
-          <span class="green-left" (click)='selectPrice(stockHQ.lowPrice)'>跌停 </span>
-          <span class="red-right" (click)='selectPrice(stockHQ.highPrice)'>涨停 </span>
+          <span class="green-left" (click)='selectPrice(stockHQ.lowPrice)'>跌停 {{stockHQ.lowPrice | toFixed}}</span>
+          <span class="red-right" (click)='selectPrice(stockHQ.highPrice)'>涨停 {{stockHQ.highPrice | toFixed}}</span>
         </div>
         <div>
           <input class="input" type="number" placeholder="卖出量" [(ngModel)]='appointCnt' (keyup)='inputCnt()'>
@@ -90,11 +90,11 @@
           <div class="{{ccount === '1/4full'?'four-btn-active':''}}" (click)='selectCount("1/4full")'>1/4仓</div>
         </div>
         <div class="buy">
-          <div (click)='buy()'>卖出</div>
+          <div (click)='buy()'>平仓</div>
         </div>
       </div>
       <div class="right-div">
-        <!-- <p (click)='selectPrice(stockHQ.sellLevel.sellPrice05)'>
+        <p (click)='selectPrice(stockHQ.sellLevel.sellPrice05)'>
           <span>卖5</span>
           <span class="{{HQColor(stockHQ.sellLevel.sellPrice05)}}">{{stockHQ.sellLevel.sellPrice05 | toFixed}}</span>
           <span>{{stockHQ.sellLevel.sellVolume05 | numInt}}</span>
@@ -144,7 +144,7 @@
           <span>买5</span>
           <span class="{{HQColor(stockHQ.buyLevel.buyPrice05)}}">{{stockHQ.buyLevel.buyPrice05 | toFixed}}</span>
           <span>{{stockHQ.buyLevel.buyVolume05 | numInt}}</span>
-        </p> -->
+        </p>
       </div>
     </div>
   </div>

@@ -116,7 +116,7 @@
           {{a.lastPrice}}
         </td>
         <td *ngIf='roleCode!=="0"'>
-          <span *ngIf='a.appointStatusIng' (click)='cancle(a)'>撤单</span>
+          <span *ngIf='a.cancelable' (click)='cancle(a)'>撤单</span>
         </td>
       </tr>
     </table>

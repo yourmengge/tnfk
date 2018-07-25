@@ -171,3 +171,7 @@
 .SELL .add-down div {
     background: #145c90;
 }
+
+span{
+    cursor: pointer;
+}

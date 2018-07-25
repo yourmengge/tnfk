@@ -20,16 +20,6 @@ export class CpzjComponent implements DoCheck {
   constructor(public data: DataService, public http: HttpService) {
   }
 
-  disabled(length) {
-    if (this.data.roleCode === '0') {
-      return true;
-    } else if (this.data.roleCode === '1' && length === 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   ngDoCheck() {
     if (this.code !== this.data.productCode) {
       this.code = this.data.productCode;
@@ -39,23 +29,6 @@ export class CpzjComponent implements DoCheck {
         this.getList();
       }
 
-    }
-  }
-
-  clickAll() {
-    this.checkedAll = !this.checkedAll;
-    if (this.checkedAll) {
-      // tslint:disable-next-line:forin
-      for (const i in this.list) {
-        this.checkList.push(i);
-        this.list[i].isChecked = true;
-      }
-    } else {
-      this.checkList = [];
-      // tslint:disable-next-line:forin
-      for (const i in this.list) {
-        this.list[i].isChecked = false;
-      }
     }
   }
 
@@ -72,27 +45,7 @@ export class CpzjComponent implements DoCheck {
   getList() {
     this.data.clearTimeOut();
     this.http.productHold(this.code).subscribe((res) => {
-      for (const i in res) {
-        if (!this.data.isNullArray(this.list)) {
-          res[i].kfp = res[i].ableCnt;
-          if (this.checkList.includes(i)) {
-            res[i].ableCnt = this.list[i].ableCnt;
-          }
-        } else {
-          res[i].kfp = res[i].ableCnt;
-        }
-      }
       this.list = res;
-      if (this.checkList.length === 0) {
-        for (const i of this.list) {
-          i.isChecked = false;
-        }
-      } else {
-        this.checkList.forEach((element) => {
-          this.list[element].isChecked = true;
-        });
-      }
-
       this.data.settimeout = setTimeout(() => {
         this.getList();
       }, this.data.timeout);
@@ -100,27 +53,6 @@ export class CpzjComponent implements DoCheck {
       this.data.error = err.error;
       this.data.isError();
     });
-  }
-
-  /**
- * 选中复选框
- */
-  checkbox(index) {
-    index = index + '';
-    // 判断是否是选中状态的复选框，如果是，从数组中剔除，否，添加到数组中
-    if (this.checkList.indexOf(index) >= 0) {
-      this.checkList.splice(this.checkList.indexOf(index), 1);
-      this.list[index].isChecked = false;
-    } else {
-      this.checkList.push(index);
-      this.list[index].isChecked = true;
-    }
-
-    if (this.checkList.length === this.list.length) {
-      this.checkedAll = true;
-    } else {
-      this.checkedAll = false;
-    }
   }
 
   fptd() {

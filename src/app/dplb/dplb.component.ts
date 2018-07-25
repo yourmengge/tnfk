@@ -11,6 +11,7 @@ import { StaticData } from '../static-data';
 })
 export class DplbComponent extends GetListFn {
   public static = new StaticData();
+  pkOrder: any;
   constructor(public data: DataService, public http: HttpService) {
     super(data, http);
     this.url = this.static.GET_CLOSE;
@@ -18,13 +19,7 @@ export class DplbComponent extends GetListFn {
 
   cancle(a) {
     this.confirmText = '确认撤单？';
-    this.resData = {
-      productCode: a.productCode,
-      teamCode: this.code,
-      accountCode: a.accountCode,
-      stockCode: a.stockCode,
-      appointOrderCode: a.appointOrderCode
-    };
+    this.pkOrder = a.pkOrder;
     this.confirm = this.data.show;
     this.actionType = 'cancle';
 
@@ -32,7 +27,7 @@ export class DplbComponent extends GetListFn {
 
   submit(type) {
     if (type) { // confirm返回true表示点击确认
-      this.http.appointCancel(this.resData).subscribe((res) => {
+      this.http.appointCancel(this.pkOrder).subscribe((res) => {
         this.getList();
         this.data.ErrorMsg('撤单已提交');
         this.closeConfirm();

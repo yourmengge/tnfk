@@ -12,6 +12,7 @@ export class GhlbComponent extends GetListFn {
   public static = new StaticData();
   constructor(public data: DataService, public http: HttpService) {
     super(data, http);
+    this.confirmText = '确定归还团队？';
     this.url = this.static.GET_PRIVATE_HOLD;
   }
 
@@ -81,14 +82,12 @@ export class GhlbComponent extends GetListFn {
       const data = {
         teamCode: this.code,
         productCode: '',
-        stockCode: '',
-        stockNum: '',
+        ableScale: '',
         execType: 3,
         accountCode: ''
       };
       data.accountCode = this.list[element].accountCode;
       data.productCode = this.list[element].productCode;
-      data.stockCode = this.list[element].stockCode;
       if (this.list[element].bcgh <= 0) {
         this.data.ErrorMsg('归还股票数量必须大于0！');
         return temp = 1;
@@ -96,7 +95,7 @@ export class GhlbComponent extends GetListFn {
         this.data.ErrorMsg('归还股票数量不能大于可归还数量！');
         return temp = 1;
       } else {
-        data.stockNum = this.list[element].bcgh;
+        data.ableScale = this.list[element].bcgh;
         this.array.push(data);
       }
     });

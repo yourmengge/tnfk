@@ -40,16 +40,16 @@
           <input type="checkbox" name="" id=""   [(checked)]='a.isChecked'>
         </td>
         <td (click)='checkbox(i)'>
-          {{a.stockCode}}
+          {{a.productCode}}
         </td>
         <td (click)='checkbox(i)'>
-          {{a.stockName}}
+          {{a.productName}}
         </td>
         <td (click)='checkbox(i)'>
-          {{a.stockCnt}}
+          {{a.totalScale}}
         </td>
         <td (click)='checkbox(i)'>
-          {{a.ableCnt}}
+          {{a.ableScale}}
         </td>
         <td>
           <input type="number" class="table-input" [(ngModel)]='a.bcfp'>
@@ -62,7 +62,7 @@
   </div>
   <div class="fpjyy-alert" *ngIf='alert'>
     <div class="alert-title">
-      选择要分配的交易员
+      选择要分配的投顾
       <img class="close-btn" src="./assets/images/close.png" alt="" (click)='close()'>
     </div>
     <div class="alert-div my-scroll">
