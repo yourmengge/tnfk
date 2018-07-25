@@ -80,8 +80,8 @@ export class GetListFn implements DoCheck {
     }
 
     check() {
-        if (this.code !== this.data.searchCode) {
-            this.code = this.data.searchCode;
+        if (this.code !== this.data.teamCode) {
+            this.code = this.data.teamCode;
             this.list = [];
             this.userCode = this.data.userCode;
             this.checkList = [];

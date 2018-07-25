@@ -23,9 +23,9 @@ export class DataService {
 
   roleCode: string; // 0	查询权限  1	操作权限
 
-  searchCode: string; // 团队查询或产品查询的code
-  searchName: string; // 团队查询或产品查询的名字
-
+  teamCode: string; // 团队查询或产品查询的code
+  teamName: string; // 团队查询或产品查询的名字
+  productName: string;
   productCode: string;
 
   accountValid = /^[0-9A-Za-z_]+$/;
@@ -43,7 +43,7 @@ export class DataService {
     selectMonth: ''
   };
   constructor(public router: Router) {
-    this.searchCode = '';
+    this.teamCode = '';
     this.userCode = '';
     this.productCode = '';
     this.roleCode = this.getSession('roleCode') === undefined ? 0 : this.getSession('roleCode');

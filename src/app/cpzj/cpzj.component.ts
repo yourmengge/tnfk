@@ -84,9 +84,8 @@ export class CpzjComponent implements DoCheck {
       }
       this.list = res;
       if (this.checkList.length === 0) {
-        // tslint:disable-next-line:forin
-        for (const i in this.list) {
-          this.list[i].isChecked = false;
+        for (const i of this.list) {
+          i.isChecked = false;
         }
       } else {
         this.checkList.forEach((element) => {
@@ -108,7 +107,6 @@ export class CpzjComponent implements DoCheck {
  */
   checkbox(index) {
     index = index + '';
-    // tslint:disable-next-line:no-unused-expression
     // 判断是否是选中状态的复选框，如果是，从数组中剔除，否，添加到数组中
     if (this.checkList.indexOf(index) >= 0) {
       this.checkList.splice(this.checkList.indexOf(index), 1);
