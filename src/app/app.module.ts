@@ -29,7 +29,6 @@ import { CpwtlbComponent } from './cpwtlb/cpwtlb.component';
 import { CpcjlbComponent } from './cpcjlb/cpcjlb.component';
 import { TimePipe } from './time.pipe';
 import { LrtjComponent } from './lrtj/lrtj.component';
-import { CplrtjComponent } from './cplrtj/cplrtj.component';
 import { HistoryComponent } from './history/history.component';
 import { HistoryFooterComponent } from './history-footer/history-footer.component';
 import { LscjComponent } from './lscj/lscj.component';
@@ -113,7 +112,6 @@ const appRoutes: Routes = [
     CpcjlbComponent,
     TimePipe,
     LrtjComponent,
-    CplrtjComponent,
     HistoryComponent,
     HistoryFooterComponent,
     LscjComponent,

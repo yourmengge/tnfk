@@ -5,6 +5,7 @@ import { DataService } from './data.service';
 @Injectable()
 export class HttpService {
   public host = 'http://101.132.65.124:10008/tnproxy/';
+  public ws = this.host + 'webSocket';
   // public host = 'http://218.85.23.217:8082/tnproxy/tn/';
   // public host = 'http://106.15.92.93:10008/tnproxy/tn/';
   public stockHQ: any;
@@ -32,6 +33,13 @@ export class HttpService {
 
   productHold(code) {
     return this.POST('tn/product/' + code + '/balance', {});
+  }
+
+  /**
+ * 取消订阅
+ */
+  cancelSubscribe() {
+    return this.POST('push/unsubsMarket', {});
   }
 
   /**

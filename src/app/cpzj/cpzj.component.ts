@@ -46,6 +46,7 @@ export class CpzjComponent implements DoCheck {
     this.data.clearTimeOut();
     this.http.productHold(this.code).subscribe((res) => {
       this.list = res;
+      this.list.ableCnt = this.list.ableScale;
       this.data.settimeout = setTimeout(() => {
         this.getList();
       }, this.data.timeout);
@@ -57,23 +58,13 @@ export class CpzjComponent implements DoCheck {
 
   fptd() {
     let i = 0;
-    this.checkList.forEach((element) => {
-      console.log(typeof (this.list[element].ableCnt));
-      if (this.list[element].ableCnt <= 0) {
-        this.data.ErrorMsg('分配数量必须大于0');
-        return i = 1;
-      } else if (this.list[element].ableCnt > this.list[element].kfp) {
-        this.data.ErrorMsg('分配数量不能大于可分配数量');
-        return i = 1;
-      }
-      // if (this.list[element].ableCnt % 100 !== this.list[element].ghcp % 100) {
-      //   // if (!this.data.is100Int(this.list[element].ableCnt)) {
-      //   //   this.data.ErrorMsg('分配数量只能为100的整数倍');
-      //   //   return i = 1;
-      //   // }
-      // }
-
-    });
+    if (this.list.ableCnt > this.list.ableScale) {
+      this.data.ErrorMsg('分配数量不能大于股票数量');
+      return i = 1;
+    } else if (this.list.ableCnt <= 0) {
+      this.data.ErrorMsg('分配数量必须大于0');
+      return i = 1;
+    }
     if (i === 0) {
       this.alert = this.data.show;
       this.getJyyList();
@@ -105,21 +96,13 @@ export class CpzjComponent implements DoCheck {
  * 确认选择
  */
   submitJYY() {
-    const array = [];
-    this.checkList.forEach((element) => {
-      const data = {
-        teamCode: this.jyyCode,
-        productCode: '',
-        stockCode: '',
-        stockNum: '',
-        execType: 1
-      };
-      data.productCode = this.list[element].productCode;
-      data.stockCode = this.list[element].stockNo;
-      data.stockNum = this.list[element].ableCnt;
-      array.push(data);
-    });
-    this.submit(array);
+    const data = {
+      teamCode: this.jyyCode,
+      productCode: this.list.productCode,
+      ableScale: this.list.ableCnt,
+      execType: 1
+    };
+    this.submit(data);
   }
 
   close() {
@@ -132,7 +115,7 @@ export class CpzjComponent implements DoCheck {
  */
   submit(data) {
     this.data.Loading(this.data.show);
-    this.http.coupon({ list: data }).subscribe((res) => {
+    this.http.coupon({ list: [data] }).subscribe((res) => {
       console.log(res);
       this.data.ErrorMsg('提交成功');
       this.close();

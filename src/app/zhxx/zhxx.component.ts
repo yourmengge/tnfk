@@ -214,6 +214,14 @@ export class ZhxxComponent implements DoCheck {
     }
   }
 
+  tdColor(profit, cashScale, flatLine, type) {
+    if (profit >= cashScale * flatLine) {
+      return type;
+    } else {
+      return '';
+    }
+  }
+
   cclb() {
     if (this.temp !== '') {
       this.data.gotoId('main/tdgl/cclb', this.selectDetail.accountCode);

@@ -21,6 +21,10 @@ export class HistoryList implements DoCheck, OnInit {
     constructor(public data: DataService, public http: HttpService) {
 
     }
+
+    search() {
+
+    }
     ngDoCheck() {
         if (this.data.getUrl(2) === 'cpgl' && this.code !== this.data.productCode) {
             this.code = this.data.productCode;
@@ -85,6 +89,9 @@ export class HistoryList implements DoCheck, OnInit {
                 this.data.isError();
             });
         }
+
+    }
+    export() {
 
     }
 }

@@ -4,6 +4,8 @@ import { HttpService } from '../http.service';
 import { GetListFn } from '../get-list-fn';
 import { StaticData } from '../static-data';
 import { ActivatedRoute } from '@angular/router';
+import * as SockJS from 'sockjs-client';
+import { over } from '@stomp/stompjs';
 
 @Component({
   selector: 'app-cclb',
@@ -18,14 +20,18 @@ export class CclbComponent extends GetListFn {
   appointPrice: any;
   classType: string;
   appointCnt: any;
+  socketInterval: any;
   accountCode: any;
   stockHQ: any;
+  stompClient: any;
   stockName: string;
+  connectStatus: boolean;
   constructor(public data: DataService, public http: HttpService, public activeRoute: ActivatedRoute) {
     super(data, http);
     this.resetAlert = this.data.hide;
-    this.fullcount = 10000;
+    this.fullcount = 0;
     this.stockHQ = this.data.stockHQ;
+    this.connectStatus = false;
     this.accountCode = this.activeRoute.snapshot.params['id'];
     this.url = 'tn/hold/' + this.accountCode;
   }
@@ -61,6 +67,7 @@ export class CclbComponent extends GetListFn {
       } else {
         this.stockHQ = this.data.stockHQ;
       }
+      this.connect();
     }, (err) => {
       this.data.error = err.error;
       this.data.isError();
@@ -135,6 +142,8 @@ export class CclbComponent extends GetListFn {
 
   close() {
     this.resetAlert = this.data.hide;
+    this.cancelSubscribe();
+    this.disconnect();
   }
 
   getList() {
@@ -202,4 +211,61 @@ export class CclbComponent extends GetListFn {
     }
   }
 
+  /**
+ * 取消订阅
+ */
+  cancelSubscribe() {
+    window.clearInterval(this.socketInterval);
+    this.http.cancelSubscribe().subscribe((res) => {
+      console.log('取消订阅');
+    });
+  }
+
+  /**
+ * 断开连接
+ */
+  disconnect() {
+    if (this.connectStatus) {
+      this.stompClient.disconnect((() => {
+        console.log('断开链接');
+        window.clearInterval(this.socketInterval);
+      }));
+    }
+  }
+
+  /**
+     * 连接ws
+     */
+  connect() {
+    const that = this;
+    // this.cancelSubscribe();
+    const socket = new SockJS(this.http.ws);
+    const headers = { token: this.data.getToken() };
+    this.stompClient = over(socket);
+    this.connectStatus = true;
+    this.stompClient.connect(headers, function (frame) {
+      // console.log('Connected: ' + frame);
+      that.stompClient.subscribe('/user/' + that.data.getToken() + '/topic/market', function (res) {
+        that.stockHQ = JSON.parse(res.body);
+        if (that.stockName.includes('ST')) {
+          that.stockHQ.lowPrice = Math.round(that.stockHQ.preClosePrice * 95) / 100;
+          that.stockHQ.highPrice = Math.round(that.stockHQ.preClosePrice * 105) / 100;
+        } else {
+          that.stockHQ.lowPrice = Math.round(that.stockHQ.preClosePrice * 90) / 100;
+          that.stockHQ.highPrice = Math.round(that.stockHQ.preClosePrice * 110) / 100;
+        }
+      });
+      this.socketInterval = setInterval(() => {
+        that.stompClient.send(' ');
+      }, 60000);
+    }, function (err) {
+      console.log('err', err);
+    });
+  }
+  /**
+   * 输入买入量
+   */
+  inputCnt() {
+    this.ccount = '';
+  }
 }

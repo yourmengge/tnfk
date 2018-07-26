@@ -26,20 +26,20 @@
           可分配数量
         </th>
       </tr>
-      <tr *ngFor='let a of list;let i = index;'>
-        <!-- <td (click)='checkbox(i)'>
+      <tr *ngFor='let a of list;'>
+        <!-- <td>
           <input type="checkbox" name="" id="" [(checked)]='a.isChecked'>
         </td> -->
-        <td (click)='checkbox(i)'>
+        <td>
           {{a.stockNo}}
         </td>
-        <td (click)='checkbox(i)'>
+        <td>
           {{a.stockName}}
         </td>
-        <td (click)='checkbox(i)'>
+        <td>
           {{a.stockCnt}}
         </td>
-        <td (click)='checkbox(i)'>
+        <td>
           {{a.productCode}}
         </td>
         <td>
@@ -47,17 +47,5 @@
         </td>
       </tr>
     </table>
-  </div>
-  <div class="fpjyy-alert" *ngIf='alert'>
-    <!-- <div class="alert-title">
-      选择要分配的团队
-      <img class="close-btn" src="./assets/images/close.png" alt="" (click)='close()'>
-    </div> -->
-    <div class="alert-div my-scroll">
-      <div *ngFor='let a of jyyList' class="{{jyyCode === a.teamCode?'select-acitve':''}}" (click)='selectJYY(a)'>{{a.teamName}}</div>
-    </div>
-    <div class="alert-button-div">
-      <button (click)='submitJYY()'>确认</button>
-    </div>
   </div>
 </div>

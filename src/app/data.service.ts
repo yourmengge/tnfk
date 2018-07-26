@@ -119,6 +119,14 @@ export class DataService {
     window.clearTimeout(this.settimeout);
   }
 
+  getToken() {
+    if (this.isNull(this.token)) {
+      return this.getSession('token');
+    } else {
+      return this.token;
+    }
+  }
+
   /**
  * 清楚settimeout
  */
@@ -133,9 +141,9 @@ export class DataService {
     return this.router.navigate([url]);
   }
 
-    /**
-   * 判断有几位小数
-   */
+  /**
+ * 判断有几位小数
+ */
   Decimal(num) {
     num = num + '';
     if (num.indexOf('.') !== -1) {

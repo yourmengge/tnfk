@@ -63,6 +63,7 @@
 
 .add-down {
     display: flex;
+    user-select: none;
 }
 
 .add-down div {
@@ -76,6 +77,10 @@
     line-height: 29px;
     margin: 0 !important;
     cursor: pointer;
+}
+
+.add-down div:active{
+    background: #910013
 }
 
 .green-left {

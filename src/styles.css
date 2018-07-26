@@ -29,6 +29,10 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     color: green !important;
 }
 
+.orange {
+    color: orange !important;
+}
+
 .search-div {
     padding: 10px 0;
     padding-top: 20px;
@@ -57,6 +61,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     border-radius: 5px;
     font-size: 14px;
     height: 30px;
+    margin-right: 20px;
 }
 
 .search-div button:hover {
@@ -120,7 +125,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     font-size: 14px;
     margin: 0 5px;
     color: #0483b5;
-    font-weight:bold;
+    font-weight: bold;
     word-break: keep-all;
 }
 
@@ -369,7 +374,7 @@ input:read-only {
     background: #0f447c;
 }
 
-.alert-title{
+.alert-title {
     width: 400px;
     height: 50px;
     line-height: 50px;
@@ -390,8 +395,6 @@ input:read-only {
     margin-top: 13px;
     cursor: pointer;
 }
-
-
 
 @media screen and (max-width: 1440px) {
     .search-div {

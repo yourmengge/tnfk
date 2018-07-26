@@ -93,10 +93,10 @@
         <td>
           {{a.cashScale}}
         </td>
-        <td>
+        <td [class]='tdColor(a.profit,a.cashScale,a.flatLine,"red")'>
           {{a.flatLine}}
         </td>
-        <td>
+        <td [class]='tdColor(a.profit,a.cashScale,a.cordonLine,"orange")'>
           {{a.cordonLine}}
         </td>
         <td>

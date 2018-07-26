@@ -47,7 +47,7 @@ export class Productlist implements DoCheck {
 
     export() {
         this.exportData = 'teamCode=' + this.code + '&accountCode=' + this.searchCode;
-        this.http.export('product/' + this.code + this.exportUrl, this.exportData).subscribe((res) => {
+        this.http.export('tn/product/' + this.code + this.exportUrl, this.exportData).subscribe((res) => {
             console.log(res);
             this.data.downloadFile(res, this.exportName);
         }, (err) => {

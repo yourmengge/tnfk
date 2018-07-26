@@ -14,6 +14,6 @@ export class CpwtlbComponent extends Productlist {
     super(data, http);
     this.url = this.static.PRODUCT_APPOINT;
     this.exportName = '产品委托列表';
-    this.exportUrl = '/appoint';
+    this.exportUrl = '/appoint/export';
   }
 }
