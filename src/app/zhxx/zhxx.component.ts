@@ -1,7 +1,7 @@
 import { Component, DoCheck } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpService } from '../http.service';
-import { Md5 } from 'ts-md5';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-zhxx',
@@ -29,6 +29,7 @@ export class ZhxxComponent implements DoCheck {
   confirm: boolean;
   confirmText: string;
   actionType = 'del';
+  proList: any;
   constructor(public data: DataService, public http: HttpService) {
     this.initAccountDetail();
     this.confirmText = '确定结案投顾？';
@@ -121,7 +122,7 @@ export class ZhxxComponent implements DoCheck {
       flatLine: '',
       productCode: '',
       cashScale: '',
-      status: '',
+      accountStatus: '',
       teamCode: this.code
     };
   }
@@ -130,11 +131,21 @@ export class ZhxxComponent implements DoCheck {
     this.initAccountDetail();
     this.textType = '新增';
     this.alert = this.data.show;
+    this.getProList();
+  }
+
+  getProList() {
+    this.http.getProList().subscribe((res) => {
+      this.proList = res;
+      this.accountDetail.productCode = res[0]['productCode'];
+    }, (err) => {
+      this.data.error = err.error;
+      this.data.isError();
+    });
   }
 
   addSubmit() {
     this.accountDetail.teamCode = this.code;
-    console.log(this.accountDetail.allottedScale);
     if (this.textType === '新增') {
       if (this.accountDetail.accountCode === '') {
         this.data.ErrorMsg('投顾账号不能为空');
@@ -153,11 +164,14 @@ export class ZhxxComponent implements DoCheck {
         // tslint:disable-next-line:max-line-length
       } else if (this.data.isNull(this.accountDetail.cordonLine) || this.accountDetail.cordonLine < 0 || this.accountDetail.cordonLine > 1) {
         this.data.ErrorMsg('警戒线比例必填且只能为0-1的数字');
+      } else if (this.accountDetail.flatLine < this.accountDetail.cordonLine) {
+        this.data.ErrorMsg('平仓线比例必须大于等于警戒线比例');
       } else if (this.data.isNull(this.accountDetail.accountCommission)) {
         this.data.ErrorMsg('交易佣金必填且只能为数字');
       } else {
-        this.accountDetail.status = 0;
-        this.accountDetail.accountPwd = Md5.hashStr(this.accountDetail.accountPwd);
+        this.accountDetail.accountStatus = 0;
+        const accountData = this.accountDetail;
+        accountData.accountPwd = Md5.hashStr(accountData.accountPwd);
         this.submit(this.accountDetail, 'ADD', '添加');
       }
     } else {
@@ -168,6 +182,8 @@ export class ZhxxComponent implements DoCheck {
         // tslint:disable-next-line:max-line-length
       } else if (this.data.isNull(this.accountDetail.cordonLine) || this.accountDetail.cordonLine < 0 || this.accountDetail.cordonLine > 1) {
         this.data.ErrorMsg('警戒线比例必填且只能为0-1的数字');
+      } else if (this.accountDetail.flatLine < this.accountDetail.cordonLine) {
+        this.data.ErrorMsg('平仓线比例必须大于等于警戒线比例');
       } else if (this.data.isNull(this.accountDetail.accountCommission)) {
         this.data.ErrorMsg('交易佣金必填且只能为数字');
       } else {
@@ -201,7 +217,7 @@ export class ZhxxComponent implements DoCheck {
       allottedScale: data.allottedScale,
       productCode: data.productCode,
       productName: data.productName,
-      status: data.status,
+      accountStatus: data.accountStatus,
       teamCode: this.code
     };
   }
@@ -215,8 +231,13 @@ export class ZhxxComponent implements DoCheck {
   }
 
   tdColor(profit, cashScale, flatLine, type) {
-    if (profit >= cashScale * flatLine) {
-      return type;
+    if (profit < 0) {
+      profit = Math.abs(profit);
+      if (profit >= cashScale * flatLine) {
+        return type;
+      } else {
+        return '';
+      }
     } else {
       return '';
     }

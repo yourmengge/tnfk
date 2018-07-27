@@ -62,7 +62,7 @@
       <div *ngFor='let a of jyyList' class="{{jyyCode === a.teamCode?'select-acitve':''}}" (click)='selectJYY(a)'>{{a.teamName}}</div>
     </div>
     <div class="alert-button-div">
-      <button (click)='submitJYY()'>确认</button>
+      <button (click)='submitJYY()' [disabled]='jyyCode===""'>确认</button>
     </div>
   </div>
 </div>

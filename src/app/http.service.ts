@@ -151,7 +151,7 @@ export class HttpService {
    * 产品发生金额
    */
   productProfit(code) {
-    return this.POST('tn/product/' + code + '/profit', {});
+    return this.POST('tn/product/' + code + '/happenAmount', {});
   }
 
 

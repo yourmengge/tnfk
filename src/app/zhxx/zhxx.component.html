@@ -76,7 +76,7 @@
           {{a.accountName}}
         </td>
         <td>
-          {{a.statusDesc}}
+          {{a. accountStatusDesc}}
         </td>
         <!-- <td>
           {{a.bpLine}}
@@ -158,7 +158,9 @@
           所属产品
         </div>
         <div class="flex-content">
-          <input type="text" [(ngModel)]='accountDetail.productCode' [readonly]='textType === "修改"'>
+          <select name="" id="" [(ngModel)]='accountDetail.productCode'>
+            <option [value]="a.productCode" *ngFor='let a of proList'>{{a.productName}}</option>
+          </select>
         </div>
       </div>
       <div class="flex-alert">
@@ -200,7 +202,7 @@
           投顾状态
         </div>
         <div class="flex-content" *ngIf='textType === "修改"'>
-          <select name="" id="" [(ngModel)]='accountDetail.status'>
+          <select name="" id="" [(ngModel)]='accountDetail.accountStatus'>
             <option value="0">正常</option>
             <option value="1">停机</option>
           </select>

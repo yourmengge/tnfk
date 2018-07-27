@@ -18,6 +18,7 @@ export class CpzjComponent implements DoCheck {
   checkedAll: boolean;
   checkList = [];
   constructor(public data: DataService, public http: HttpService) {
+    this.jyyCode = '';
   }
 
   ngDoCheck() {
@@ -45,8 +46,17 @@ export class CpzjComponent implements DoCheck {
   getList() {
     this.data.clearTimeOut();
     this.http.productHold(this.code).subscribe((res) => {
+      if (!this.data.isNull(this.list.ableCnt)) {
+        if (this.list.ableCnt !== res['ableScale']) {
+          res['ableCnt'] = this.list.ableCnt;
+        } else {
+          res['ableCnt'] = res['ableScale'];
+        }
+      } else {
+        res['ableCnt'] = res['ableScale'];
+      }
       this.list = res;
-      this.list.ableCnt = this.list.ableScale;
+
       this.data.settimeout = setTimeout(() => {
         this.getList();
       }, this.data.timeout);
@@ -59,10 +69,13 @@ export class CpzjComponent implements DoCheck {
   fptd() {
     let i = 0;
     if (this.list.ableCnt > this.list.ableScale) {
-      this.data.ErrorMsg('分配数量不能大于股票数量');
+      this.data.ErrorMsg('分配资金不能大于可分配资金');
       return i = 1;
     } else if (this.list.ableCnt <= 0) {
-      this.data.ErrorMsg('分配数量必须大于0');
+      this.data.ErrorMsg('分配资金必须大于0');
+      return i = 1;
+    } else if (this.data.Decimal(this.list.ableCnt) > 2) {
+      this.data.ErrorMsg('分配资金最多两位小数');
       return i = 1;
     }
     if (i === 0) {
