@@ -30,6 +30,8 @@ export class ZhxxComponent implements DoCheck {
   confirmText: string;
   actionType = 'del';
   proList: any;
+  isSort: boolean;
+  sortType: boolean;
   constructor(public data: DataService, public http: HttpService) {
     this.initAccountDetail();
     this.confirmText = '确定结案投顾？';
@@ -45,6 +47,8 @@ export class ZhxxComponent implements DoCheck {
     this.userCode = this.data.userCode;
     this.alert = this.data.hide;
     this.textType = '新增';
+    this.isSort = false;
+    this.sortType = false;
 
   }
 
@@ -75,6 +79,9 @@ export class ZhxxComponent implements DoCheck {
     };
     this.http.getTeamMember(data).subscribe((res) => {
       this.list = res;
+      if (this.isSort) {
+        this.sort();
+      }
       this.data.settimeout = setTimeout(() => {
         this.getList();
       }, this.data.timeout);
@@ -203,9 +210,27 @@ export class ZhxxComponent implements DoCheck {
     });
   }
 
+  sortList() {
+    this.sortType = !this.sortType;
+    this.sort();
+  }
+
+  sort() {
+    this.isSort = true;
+    this.list.sort((a, b) => {
+      if (this.sortType) {
+        return (b.profit - a.profit);
+      } else {
+        return (a.profit - b.profit);
+      }
+
+    });
+  }
+
   select(data, index) {
     this.checkId = index;
     this.temp = data.accountCode;
+    this.userCode = data.accountCode;
     this.selectDetail = {
       accountCode: data.accountCode,
       accountCommission: data.accountCommission,
@@ -270,6 +295,7 @@ export class ZhxxComponent implements DoCheck {
         this.http.delJyy(this.deleteData).subscribe((res) => {
           this.data.ErrorMsg('结案成功');
           this.checkId = '';
+          this.temp = '';
           this.getList();
           this.closeConfirm();
         }, (err) => {

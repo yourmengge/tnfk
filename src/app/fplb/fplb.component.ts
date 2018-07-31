@@ -106,6 +106,7 @@ export class FplbComponent implements DoCheck {
    */
   fpjyy() {
     let i = 0;
+    let productCode = '';
     if (this.checkList.length > 1) {
       this.data.ErrorMsg('只能选择一个产品');
     } else {
@@ -124,11 +125,11 @@ export class FplbComponent implements DoCheck {
           this.data.ErrorMsg('分配数量不能大于股票数量');
           return i = 1;
         }
-
+        productCode = this.list[element].productCode;
       });
       if (i === 0) {
         this.alert = this.data.show;
-        this.getJyyList();
+        this.getJyyList(productCode);
       }
     }
 
@@ -175,9 +176,9 @@ export class FplbComponent implements DoCheck {
   /**
    * 获取交易员列表
    */
-  getJyyList() {
+  getJyyList(productCode) {
     this.data.Loading(this.data.show);
-    this.http.getJyyList2(this.code).subscribe((res) => {
+    this.http.getJyyList2(this.code, productCode).subscribe((res) => {
       this.jyyList = res;
       this.data.Loading(this.data.hide);
     }, (err) => {

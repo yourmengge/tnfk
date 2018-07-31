@@ -334,6 +334,25 @@ export class DataService {
   }
 
   /**
+   * 获取历史列表
+   */
+  getHistoryFooter2() {
+    return [{
+      id: 'lswtlb',
+      name: '历史委托'
+    }, {
+      id: 'lscj',
+      name: '历史成交'
+    // }, {
+    //   id: 'lsyk',
+    //   name: '历史盈亏'
+    // }, {
+    //   id: 'lslyl',
+    //   name: '对账单'
+    }];
+  }
+
+  /**
    * 获取左边菜单栏列表
    */
   getMenuList() {

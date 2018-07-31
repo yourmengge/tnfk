@@ -4,10 +4,11 @@ import { DataService } from './data.service';
 
 @Injectable()
 export class HttpService {
+  // public host = 'http://218.85.23.217:8082/tnproxy/';
   public host = 'http://101.132.65.124:10008/tnproxy/';
   public ws = this.host + 'webSocket';
-  // public host = 'http://218.85.23.217:8082/tnproxy/tn/';
-  // public host = 'http://106.15.92.93:10008/tnproxy/tn/';
+  // public host = 'http://218.85.23.217:8082/tnproxy/';
+  // public host = 'http://106.15.92.93:10008/tnproxy/';
   public stockHQ: any;
   public tableList: any;
   constructor(public http: HttpClient, public data: DataService) {
@@ -47,6 +48,17 @@ export class HttpService {
  */
   getHistoryList(data, type) {
     return this.POST('tn/history/' + type, data);
+  }
+
+  /**
+* 导出历史列表
+*/
+  exportHistoryList(data, type) {
+    // return this.POST('tn/history/' + type + '/export', data);
+    this.data.getExportHeader();
+    return this.http.post(this.host + 'tn/history/' + type + '/export', data,
+      { headers: this.data.getExportHeader(), responseType: 'arraybuffer' });
+
   }
 
   /**
@@ -122,8 +134,8 @@ export class HttpService {
   /**
  * 获取交易员列表（用于弹窗中的交易员列表）
  */
-  getJyyList2(teamCode) {
-    return this.POST('tn/team/' + teamCode + '/account', {});
+  getJyyList2(teamCode, productCode) {
+    return this.POST('tn/team/' + teamCode + '/account?productCode=' + productCode, {});
   }
 
   /**

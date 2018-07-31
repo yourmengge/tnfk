@@ -36,6 +36,11 @@ export class CclbComponent extends GetListFn {
     this.url = 'tn/hold/' + this.accountCode;
   }
 
+  sortList(name) {
+    this.sortType = !this.sortType;
+    super.sort(name);
+  }
+
   sell(a) {
     this.appointCnt = '';
     const data = {
@@ -243,9 +248,9 @@ export class CclbComponent extends GetListFn {
     const headers = { token: this.data.getToken() };
     this.stompClient = over(socket);
     this.connectStatus = true;
-    this.stompClient.connect(headers, function (frame) {
+    this.stompClient.connect(headers, () => {
       // console.log('Connected: ' + frame);
-      that.stompClient.subscribe('/user/' + that.data.getToken() + '/topic/market', function (res) {
+      that.stompClient.subscribe('/user/' + that.data.getToken() + '/topic/market', res => {
         that.stockHQ = JSON.parse(res.body);
         if (that.stockName.includes('ST')) {
           that.stockHQ.lowPrice = Math.round(that.stockHQ.preClosePrice * 95) / 100;
@@ -258,7 +263,7 @@ export class CclbComponent extends GetListFn {
       this.socketInterval = setInterval(() => {
         that.stompClient.send(' ');
       }, 60000);
-    }, function (err) {
+    }, err => {
       console.log('err', err);
     });
   }

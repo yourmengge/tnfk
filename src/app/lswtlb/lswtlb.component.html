@@ -166,13 +166,7 @@
           备注信息
         </th>
         <th>
-          委托标志
-        </th>
-        <th>
           委托PK
-        </th>
-        <th>
-          持仓来源
         </th>
       </tr>
       <tr *ngFor='let a of list' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
@@ -225,13 +219,7 @@
           {{a.memo}}
         </td>
         <td>
-          {{a.isVritualDesc}}
-        </td>
-        <td>
           {{a.pkOrder}}
-        </td>
-        <td>
-          {{a.stockFromDesc}}
         </td>
       </tr>
     </table>

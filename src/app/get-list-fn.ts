@@ -3,6 +3,9 @@ import { HttpService } from './http.service';
 import { DoCheck } from '@angular/core';
 
 export class GetListFn implements DoCheck {
+    isSort: boolean;
+    sortType: any;
+    sortName: any;
     list: any;
     searchCode: any;
     proName: any;
@@ -49,8 +52,22 @@ export class GetListFn implements DoCheck {
     actionType: any;
     sellType: any;
     constructor(public data: DataService, public http: HttpService) {
-
+        this.isSort = false;
+        this.sortType = 0;
     }
+
+    sort(type) {
+        this.sortName = type;
+        this.isSort = true;
+        this.list.sort((a, b) => {
+            if (this.sortType) {
+                return (b[type] - a[type]);
+            } else {
+                return (a[type] - b[type]);
+            }
+        });
+    }
+
     getList() {
         this.data.clearTimeOut();
         this.listData = {
@@ -59,6 +76,9 @@ export class GetListFn implements DoCheck {
         };
         this.http.getList(this.url, this.listData).subscribe((res) => {
             this.list = res;
+            if (this.isSort) {
+                this.sort(this.sortName);
+            }
             this.data.settimeout = setTimeout(() => {
                 this.getList();
             }, this.data.timeout);

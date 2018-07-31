@@ -13,5 +13,6 @@ export class LsykComponent extends HistoryList {
     super(data, http);
     this.historyType = 'profit';
     this.dateType = 'month';
+    this.exportName = '历史盈亏';
   }
 }

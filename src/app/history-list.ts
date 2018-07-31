@@ -15,9 +15,11 @@ export class HistoryList implements DoCheck, OnInit {
     };
     list: any;
     code: any;
+    exportData: any;
     url: any;
     historyType: string;
     dateType: string;
+    exportName: string;
     constructor(public data: DataService, public http: HttpService) {
 
     }
@@ -92,6 +94,16 @@ export class HistoryList implements DoCheck, OnInit {
 
     }
     export() {
-
+        this.exportData = 'accountCode=' + this.historyKeyWord.accountCode +
+            '&appointOrderCode=' + this.historyKeyWord.appointOrderCode + '&beginTime=' + this.historyKeyWord.beginTime +
+            '&endTime=' + this.historyKeyWord.endTime + '&productCode=' + this.historyKeyWord.productCode +
+            '&teamCode=' + this.historyKeyWord.teamCode;
+        this.http.exportHistoryList(this.exportData, this.historyType).subscribe((res) => {
+            console.log(res);
+            this.data.downloadFile(res, this.exportName);
+        }, (err) => {
+            this.data.error = err.error;
+            this.data.isError();
+        });
     }
 }

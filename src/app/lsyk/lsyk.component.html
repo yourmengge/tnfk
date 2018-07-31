@@ -1,6 +1,6 @@
 <div class="">
   <div class="search-div history-search">
-    <span *ngIf='url === "tdgl"'>交易账户</span>
+    <span *ngIf='url === "tdgl"'>投顾账户</span>
     <input *ngIf='url === "tdgl"' type="text" [(ngModel)]='historyKeyWord.accountCode'>
     <span>交易月份</span>
     <input type="month" [(ngModel)]='historyKeyWord.selectMonth'>
@@ -31,7 +31,7 @@
       </tr>
       <tr *ngFor='let a of list'>
         <td>
-          {{a.accountType === 4?'团队':'交易员'}}
+          {{a.accountTypeDesc}}
         </td>
         <td>
           {{a.accountCode}}

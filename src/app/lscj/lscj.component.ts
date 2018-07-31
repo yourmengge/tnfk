@@ -14,6 +14,7 @@ export class LscjComponent extends HistoryList {
     super(data, http);
     this.dateType = 'day';
     this.historyType = 'trade';
+    this.exportName = '历史成交';
   }
 
 }

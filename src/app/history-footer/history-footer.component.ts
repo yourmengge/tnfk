@@ -24,7 +24,11 @@ export class HistoryFooterComponent implements OnInit {
   }
 
   getList() {
-    this.list = this.data.getHistoryFooter();
+    if (this.data.getUrl(2) === 'cpgl') {
+      this.list = this.data.getHistoryFooter2();
+    } else {
+      this.list = this.data.getHistoryFooter();
+    }
   }
 
 }

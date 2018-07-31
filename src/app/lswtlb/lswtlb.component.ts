@@ -14,6 +14,7 @@ export class LswtlbComponent extends HistoryList {
     super(data, http);
     this.dateType = 'day';
     this.historyType = 'appoint';
+    this.exportName = '历史委托';
   }
 
 }
