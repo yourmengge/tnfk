@@ -25,12 +25,16 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     color: #c31f20 !important;
 }
 
+.block{
+    color: #333 !important;
+}
+
 .green {
     color: green !important;
 }
 
 .orange {
-    color: orange !important;
+    color: rgb(235, 160, 22) !important;
 }
 
 .search-div {

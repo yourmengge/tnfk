@@ -15,6 +15,6 @@ export class CpcjlbComponent extends Productlist {
     super(data, http);
     this.url = this.static.PRODUCT_TRADE;
     this.exportName = '产品成交列表';
-    this.exportUrl = '/trade';
+    this.exportUrl = '/trade/export';
   }
 }

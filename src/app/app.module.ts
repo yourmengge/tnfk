@@ -43,6 +43,7 @@ import { CclbComponent } from './cclb/cclb.component';
 import { ToFixedPipe } from './to-fixed.pipe';
 import { NumIntPipe } from './num-int.pipe';
 import { OrderByPipe } from './order-by.pipe';
+import { NumFormatPipe } from './num-format.pipe';
 
 const historyChild: Routes = [
   { path: 'lslyl', component: LslylComponent },
@@ -125,7 +126,8 @@ const appRoutes: Routes = [
     CclbComponent,
     ToFixedPipe,
     NumIntPipe,
-    OrderByPipe
+    OrderByPipe,
+    NumFormatPipe
   ],
   imports: [
     BrowserModule,

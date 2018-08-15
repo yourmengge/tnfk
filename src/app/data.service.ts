@@ -18,7 +18,7 @@ export class DataService {
   token: string;
   settimeout: any;
   settimeoutprice: any;
-  timeout = 300000;
+  timeout = 3000;
   userCode: string; // 投顾账户
 
   roleCode: string; // 0	查询权限  1	操作权限
@@ -158,6 +158,20 @@ export class DataService {
    */
   gotoId(url, id) {
     this.router.navigate([url, id]);
+  }
+
+  /**
+   * 科学记数法转换成字符串
+   */
+  getFullNum(num) {
+    // 处理非数字
+    if (isNaN(num)) { return num; }
+
+    // 处理不需要转换的数字
+    const str = '' + num;
+    if (!/e/i.test(str)) { return num; }
+
+    return (num).toFixed(18).replace(/\.?0+$/, '');
   }
 
   getUserName() {
@@ -327,9 +341,9 @@ export class DataService {
     }, {
       id: 'lsyk',
       name: '历史盈亏'
-    // }, {
-    //   id: 'lslyl',
-    //   name: '对账单'
+      // }, {
+      //   id: 'lslyl',
+      //   name: '对账单'
     }];
   }
 
@@ -343,12 +357,12 @@ export class DataService {
     }, {
       id: 'lscj',
       name: '历史成交'
-    // }, {
-    //   id: 'lsyk',
-    //   name: '历史盈亏'
-    // }, {
-    //   id: 'lslyl',
-    //   name: '对账单'
+      // }, {
+      //   id: 'lsyk',
+      //   name: '历史盈亏'
+      // }, {
+      //   id: 'lslyl',
+      //   name: '对账单'
     }];
   }
 

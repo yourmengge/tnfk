@@ -21,7 +21,7 @@ export class TdglComponent implements DoCheck {
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.teamCode) {
+    if (this.code !== this.data.teamCode && !this.data.isNull(this.data.teamCode)) {
       this.code = this.data.teamCode;
       this.name = this.data.teamName;
       this.getPrice();

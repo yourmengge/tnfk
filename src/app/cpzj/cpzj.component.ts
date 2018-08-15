@@ -17,12 +17,14 @@ export class CpzjComponent implements DoCheck {
   alert: any;
   checkedAll: boolean;
   checkList = [];
+  isInput: boolean;
   constructor(public data: DataService, public http: HttpService) {
     this.jyyCode = '';
+    this.isInput = false;
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.productCode) {
+    if (this.code !== this.data.productCode && !this.data.isNull(this.data.productCode)) {
       this.code = this.data.productCode;
       this.list = [];
       this.checkList = [];
@@ -33,8 +35,12 @@ export class CpzjComponent implements DoCheck {
     }
   }
 
+  inputNum() {
+    this.isInput = true;
+  }
+
   refresh() {
-    this.http.refresh(this.code).subscribe((res) => {
+    this.http.refreshBalance(this.code).subscribe((res) => {
       this.getList();
       this.data.ErrorMsg('刷新列表成功');
     }, (err) => {
@@ -46,9 +52,13 @@ export class CpzjComponent implements DoCheck {
   getList() {
     this.data.clearTimeOut();
     this.http.productHold(this.code).subscribe((res) => {
-      if (!this.data.isNull(this.list.ableCnt)) {
-        if (this.list.ableCnt !== res['ableScale']) {
-          res['ableCnt'] = this.list.ableCnt;
+      if (this.isInput) {
+        if (!this.data.isNull(this.list.ableCnt)) {
+          if (this.list.ableCnt !== res['ableScale']) {
+            res['ableCnt'] = this.list.ableCnt;
+          } else {
+            res['ableCnt'] = res['ableScale'];
+          }
         } else {
           res['ableCnt'] = res['ableScale'];
         }

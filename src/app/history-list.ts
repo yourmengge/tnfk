@@ -28,7 +28,7 @@ export class HistoryList implements DoCheck, OnInit {
 
     }
     ngDoCheck() {
-        if (this.data.getUrl(2) === 'cpgl' && this.code !== this.data.productCode) {
+        if (this.data.getUrl(2) === 'cpgl' && this.code !== this.data.productCode && !this.data.isNull(this.data.productCode)) {
             this.code = this.data.productCode;
             this.getList();
             this.data.clearPrice();

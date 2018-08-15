@@ -53,7 +53,7 @@ export class ZhxxComponent implements DoCheck {
   }
 
   ngDoCheck() {
-    if (this.code !== this.data.teamCode) {
+    if (this.code !== this.data.teamCode && !this.data.isNull(this.data.teamCode)) {
       this.code = this.data.teamCode;
       this.checkId = '';
       this.userCode = this.data.userCode;
@@ -142,7 +142,7 @@ export class ZhxxComponent implements DoCheck {
   }
 
   getProList() {
-    this.http.getProList().subscribe((res) => {
+    this.http.getTeamProList(this.data.teamCode).subscribe((res) => {
       this.proList = res;
       this.accountDetail.productCode = res[0]['productCode'];
     }, (err) => {
@@ -233,7 +233,7 @@ export class ZhxxComponent implements DoCheck {
     this.userCode = data.accountCode;
     this.selectDetail = {
       accountCode: data.accountCode,
-      accountCommission: data.accountCommission,
+      accountCommission: this.numFormat(data.accountCommission),
       accountName: data.accountName,
       accountPwd: data.accountPwd,
       flatLine: data.flatLine,
@@ -247,21 +247,27 @@ export class ZhxxComponent implements DoCheck {
     };
   }
 
+  numFormat(num) {
+    return this.data.getFullNum(num);
+  }
+
   update() {
     if (this.temp !== '') {
-      this.add();
+      this.alert = this.data.show;
       this.textType = '修改';
+      console.log(this.selectDetail);
       this.accountDetail = this.selectDetail;
     }
   }
 
-  tdColor(profit, cashScale, flatLine, type) {
-    if (profit < 0) {
-      profit = Math.abs(profit);
-      if (profit >= cashScale * flatLine) {
-        return type;
-      } else {
-        return '';
+  tdColor(a) {
+    const data = a;
+    if (data.profit < 0) {
+      if (Math.abs(data.profit) >= data.cashScale * data.flatLine) {
+        return 'red';
+      }
+      if (Math.abs(data.profit) >= data.cashScale * data.cordonLine && Math.abs(data.profit) < data.cashScale * data.flatLine) {
+        return 'orange';
       }
     } else {
       return '';
@@ -331,10 +337,10 @@ export class ZhxxComponent implements DoCheck {
   resetSubmit() {
     const data = {
       accountCode: this.selectDetail.accountCode,
-      newPasswd: Md5.hashStr('111111')
+      newPasswd: Md5.hashStr('123456')
     };
     this.http.reset(data).subscribe((res) => {
-      this.data.ErrorMsg('重置密码成功');
+      this.data.ErrorMsg('重置密码成功,新密码为123456');
       this.getList();
       this.closeConfirm();
     }, (err) => {
@@ -342,7 +348,4 @@ export class ZhxxComponent implements DoCheck {
       this.data.isError();
     });
   }
-
-
-
 }

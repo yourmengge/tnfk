@@ -34,6 +34,9 @@
           总资金
         </th>
         <th>
+          可用资金
+        </th>
+        <th>
           可归还资金
         </th>
         <th>
@@ -62,8 +65,11 @@
         <td (click)='checkbox(i)'>
           {{a.totalScale}}
         </td>
-        <td (click)='checkbox(i)'>
+        <td>
           {{a.ableScale}}
+        </td>
+        <td (click)='checkbox(i)'>
+          {{a.backableScale}}
         </td>
         <td>
           <input type="number" class="table-input" [(ngModel)]='a.bcgh'>

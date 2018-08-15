@@ -65,7 +65,7 @@
           在线状态
         </th>
       </tr>
-      <tr *ngFor='let a of list;let i = index' (click)='select(a,i)'>
+      <tr *ngFor='let a of list;let i = index' (click)='select(a,i)' [class]='tdColor(a)'>
         <td>
           <input type="radio" [checked]='checkId === i' name="name" id="" (click)='select(a,i)'>
         </td>
@@ -82,7 +82,7 @@
           {{a.bpLine}}
         </td> -->
         <td>
-          {{a.accountCommission}}
+          {{a.accountCommission | numFormat}}
         </td>
         <td>
           {{a.productName}}
@@ -93,10 +93,10 @@
         <td>
           {{a.cashScale}}
         </td>
-        <td [class]='tdColor(a.profit,a.cashScale,a.flatLine,"red")'>
+        <td>
           {{a.flatLine}}
         </td>
-        <td [class]='tdColor(a.profit,a.cashScale,a.cordonLine,"orange")'>
+        <td>
           {{a.cordonLine}}
         </td>
         <td>
@@ -114,7 +114,7 @@
         <td [class]='proFit(a.profit)'>
           {{a.profit}}
         </td>
-        <td class="{{a.onlineStatus === '在线'?'red':''}}">
+        <td class="{{a.onlineStatus === '在线'?'red':'block'}}">
           {{a.onlineStatus}}
         </td>
 
@@ -146,7 +146,7 @@
           团队编码
         </div>
         <div class="flex-content" *ngIf='textType === "修改"'>
-          <input type="text" [(ngModel)]='accountDetail.productCode' [readonly]='textType === "修改"'>
+          <input type="text" [(ngModel)]='accountDetail.teamCode' [readonly]='textType === "修改"'>
         </div>
         <div class="flex-name" *ngIf='textType !== "修改"'>
           投顾密码
@@ -154,13 +154,19 @@
         <div class="flex-content" *ngIf='textType !== "修改"'>
           <input type="password" [(ngModel)]='accountDetail.accountPwd'>
         </div>
-        <div class="flex-name">
+        <div class="flex-name" *ngIf='textType !== "修改"'>
           所属产品
         </div>
-        <div class="flex-content">
+        <div class="flex-content" *ngIf='textType !== "修改"'>
           <select name="" id="" [(ngModel)]='accountDetail.productCode'>
             <option [value]="a.productCode" *ngFor='let a of proList'>{{a.productName}}</option>
           </select>
+        </div>
+        <div class="flex-name" *ngIf='textType === "修改"'>
+          所属产品
+        </div>
+        <div class="flex-content" *ngIf='textType === "修改"'>
+          <input type="text" readonly [(ngModel)]='accountDetail.productName'>
         </div>
       </div>
       <div class="flex-alert">
@@ -182,13 +188,13 @@
           平仓线比例
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.flatLine'>
+          <input type="text" maxlength="9" appNumberInput [(ngModel)]='accountDetail.flatLine'>
         </div>
         <div class="flex-name">
           警戒线比例
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.cordonLine'>
+          <input type="text" maxlength="9" appNumberInput [(ngModel)]='accountDetail.cordonLine'>
         </div>
       </div>
       <div class="flex-alert">
@@ -196,7 +202,7 @@
           交易佣金
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.accountCommission'>
+          <input type="text" maxlength="9" appNumberInput [(ngModel)]='accountDetail.accountCommission'>
         </div>
         <div class="flex-name">
           投顾状态

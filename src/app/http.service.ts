@@ -4,8 +4,8 @@ import { DataService } from './data.service';
 
 @Injectable()
 export class HttpService {
-  // public host = 'http://218.85.23.217:8082/tnproxy/';
-  public host = 'http://101.132.65.124:10008/tnproxy/';
+  public host = 'http://218.85.23.217:8082/tnproxy/';
+  // public host = 'http://101.132.65.124:10008/tnproxy/';
   public ws = this.host + 'webSocket';
   // public host = 'http://218.85.23.217:8082/tnproxy/';
   // public host = 'http://106.15.92.93:10008/tnproxy/';
@@ -94,6 +94,13 @@ export class HttpService {
    */
   getProList() {
     return this.POST('tn/product/list', {});
+  }
+
+  /**
+   * 获取产品列表：团队中有资金的产品
+   */
+  getTeamProList(code) {
+    return this.POST('tn/team/' + code + '/product', {});
   }
 
   /**
@@ -204,5 +211,12 @@ export class HttpService {
    */
   refresh(code) {
     return this.POST('tn/product/' + code + '/hold/refresh', {});
+  }
+
+    /**
+   * 产品资金刷新按钮
+   */
+  refreshBalance(code) {
+    return this.POST('tn/product/' + code + '/balance/refresh', {});
   }
 }

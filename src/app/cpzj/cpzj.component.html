@@ -13,10 +13,13 @@
           产品编码
         </th>
         <th>
-          券商总资金
+          产品总资金
         </th>
         <th>
-          券商可用资金
+          产品可用资金
+        </th>
+        <th>
+          期初可分配金额
         </th>
         <th>
           产品可分配资金
@@ -42,10 +45,13 @@
           {{list.availableBnc}}
         </td>
         <td>
+          {{list.marketCap}}
+        </td>
+        <td>
           {{list.ableScale}}
         </td>
         <td>
-          <input type="number" class="table-input" [(ngModel)]='list.ableCnt'>
+          <input type="number" (keydown)='inputNum()' class="table-input" [(ngModel)]='list.ableCnt'>
         </td>
         <td>
           <span (click)='fptd()'>分配给团队</span>
