@@ -177,8 +177,7 @@ export class ZhxxComponent implements DoCheck {
         this.data.ErrorMsg('交易佣金必填且只能为数字');
       } else {
         this.accountDetail.accountStatus = 0;
-        const accountData = this.accountDetail;
-        accountData.accountPwd = Md5.hashStr(accountData.accountPwd);
+        // accountData.accountPwd = Md5.hashStr(accountData.accountPwd);
         this.submit(this.accountDetail, 'ADD', '添加');
       }
     } else {
