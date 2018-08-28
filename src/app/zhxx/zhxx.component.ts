@@ -275,7 +275,7 @@ export class ZhxxComponent implements DoCheck {
 
   cclb() {
     if (this.temp !== '') {
-      this.data.gotoId('main/tdgl/cclb', this.selectDetail.accountCode);
+      this.data.gotoId('main/tdgl/cclb', this.selectDetail.accountCode + '-' + this.selectDetail.accountName);
     }
   }
 

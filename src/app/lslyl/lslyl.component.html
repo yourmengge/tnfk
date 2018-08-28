@@ -3,8 +3,8 @@
     <span *ngIf='url === "tdgl"'>投顾账户</span>
     <input *ngIf='url === "tdgl"' type="text" [(ngModel)]='historyKeyWord.accountCode'>
     <span>交易日期</span>
-    <input type="date" [(ngModel)]='historyKeyWord.selectDate'>
-    <button class="button" (click)='search()'>查询</button>
+    <input type="month" [(ngModel)]='historyKeyWord.selectMonth'>
+    <button class="button" (click)='getList()'>查询</button>
     <button (click)='export()'>导出列表</button>
   </div>
   <div class="table-div my-scroll" *ngIf='url === "tdgl"'>
@@ -23,10 +23,10 @@
           时间
         </th>
         <th>
-          证券代码
+          股票代码
         </th>
         <th>
-          证券名称
+          股票名称
         </th>
         <th>
           操作
@@ -43,13 +43,16 @@
       </tr>
       <tr *ngFor='let a of list'>
         <td>
-          {{a.teamCode}}
+          {{a.accountCode}}
         </td>
         <td>
-          {{a.teamName}}
+          {{a.accountName}}
         </td>
         <td>
-          {{a.productCode}}
+          {{a.orderDate | date}}
+        </td>
+        <td>
+          {{a.appointTime}}
         </td>
         <td>
           {{a.stockCode}}
@@ -58,19 +61,16 @@
           {{a.stockName}}
         </td>
         <td>
-          {{a.profitDate | date}}
+          {{a.operateDesc}}
         </td>
         <td>
-          {{a.profitLoss | round}}
+          {{a.dealCnt}}
         </td>
         <td>
-          {{a.commissPrice | round}}
+          {{a.dealAvrPrice}}
         </td>
         <td>
-          {{a.coefficient}}
-        </td>
-        <td>
-          {{a.coefficient}}
+          {{a.dealAmount}}
         </td>
       </tr>
     </table>

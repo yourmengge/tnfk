@@ -341,9 +341,9 @@ export class DataService {
     }, {
       id: 'lsyk',
       name: '历史盈亏'
-      // }, {
-      //   id: 'lslyl',
-      //   name: '对账单'
+    }, {
+      id: 'lslyl',
+      name: '对账单'
     }];
   }
 

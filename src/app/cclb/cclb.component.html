@@ -2,10 +2,15 @@
   <div style="font-size: 20px;margin: 20px 0;">
     持仓列表
   </div>
+  <div>
+    <p>投顾账号：
+      <span class="red">{{accountCode}}</span> 投顾姓名：
+      <span class="red">{{accountName}}</span>
+    </p>
+  </div>
   <div class="table-div my-scroll">
     <table class="my-table">
       <tr>
-
         <th (click)='sortList("stockCode")'>
           股票代码
         </th>
@@ -67,7 +72,7 @@
     <div class="alert-content">
       <div class="left-div">
         <div>
-          <input class="input" type="text" readonly  [(ngModel)]='stockHQ.stockCode'>
+          <input class="input" type="text" readonly [(ngModel)]='stockHQ.stockCode'>
           <span class="gpmc">{{stockName}}</span>
         </div>
         <div class="add-down">

@@ -4,8 +4,8 @@ import { DataService } from './data.service';
 import { Md5 } from 'ts-md5';
 @Injectable()
 export class HttpService {
-  public host = 'http://218.85.23.217:8082/tnproxy/';
-  // public host = 'http://101.132.65.124:10008/tnproxy/';
+  // public host = 'http://218.85.23.217:8082/tnproxy/';
+  public host = 'http://101.132.65.124:10008/tnproxy/';
   public ws = this.host + 'webSocket';
   // public host = 'http://218.85.23.217:8082/tnproxy/';
   // public host = 'http://106.15.92.93:10008/tnproxy/';
@@ -48,6 +48,10 @@ export class HttpService {
  */
   getHistoryList(data, type) {
     return this.POST('tn/history/' + type, data);
+  }
+
+  resetUserPass(data) {
+    return this.POST('tn/modifyPwd', data);
   }
 
   /**
@@ -128,7 +132,7 @@ export class HttpService {
    * 分券还券
    */
   coupon(data) {
-    return this.POST('tn/coupon', data);
+    return this.POST('tn/account/lift', data);
   }
 
   /**

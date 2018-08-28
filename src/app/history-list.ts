@@ -77,7 +77,6 @@ export class HistoryList implements DoCheck, OnInit {
             }
         }
         if (this.url === 'cpgl') {
-            this.historyKeyWord.accountCode = '';
             this.historyKeyWord.productCode = this.code;
         } else {
             this.historyKeyWord.teamCode = this.code;

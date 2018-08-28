@@ -80,14 +80,10 @@ export class GhlbComponent extends GetListFn {
     let temp = 0;
     this.checkList.forEach((element) => {
       const data = {
-        teamCode: this.code,
-        productCode: '',
-        ableScale: '',
-        execType: 3,
+        liftScale: '',
         accountCode: ''
       };
       data.accountCode = this.list[element].accountCode;
-      data.productCode = this.list[element].productCode;
       if (this.list[element].bcgh <= 0) {
         this.data.ErrorMsg('归还股票数量必须大于0！');
         return temp = 1;
@@ -95,7 +91,7 @@ export class GhlbComponent extends GetListFn {
         this.data.ErrorMsg('归还股票数量不能大于可归还数量！');
         return temp = 1;
       } else {
-        data.ableScale = this.list[element].bcgh;
+        data.liftScale = this.list[element].bcgh;
         this.array.push(data);
       }
     });

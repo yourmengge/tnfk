@@ -12,7 +12,8 @@ export class LslylComponent extends HistoryList {
 
   constructor(public http: HttpService, public data: DataService) {
     super(data, http);
-    this.dateType = 'day';
-    this.historyType = 'coeff';
+    this.dateType = 'month';
+    this.exportName = '对账单';
+    this.historyType = 'statement';
   }
 }

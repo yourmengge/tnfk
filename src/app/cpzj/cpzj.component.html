@@ -54,7 +54,7 @@
           <input type="number" (keydown)='inputNum()' class="table-input" [(ngModel)]='list.ableCnt'>
         </td>
         <td>
-          <span (click)='fptd()'>分配给团队</span>
+          <span *ngIf='roleCode == 1' (click)='fptd()'>分配给团队</span>
         </td>
       </tr>
     </table>

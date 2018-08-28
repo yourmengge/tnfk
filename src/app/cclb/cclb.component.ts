@@ -23,6 +23,7 @@ export class CclbComponent extends GetListFn {
   socketInterval: any;
   accountCode: any;
   stockHQ: any;
+  accountName: any;
   stompClient: any;
   stockName: string;
   connectStatus: boolean;
@@ -32,7 +33,8 @@ export class CclbComponent extends GetListFn {
     this.fullcount = 0;
     this.stockHQ = this.data.stockHQ;
     this.connectStatus = false;
-    this.accountCode = this.activeRoute.snapshot.params['id'];
+    this.accountName = this.activeRoute.snapshot.params['id'].split('-')[1];
+    this.accountCode = this.activeRoute.snapshot.params['id'].split('-')[0];
     this.url = 'tn/hold/' + this.accountCode;
   }
 

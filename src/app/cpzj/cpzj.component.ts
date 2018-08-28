@@ -18,9 +18,11 @@ export class CpzjComponent implements DoCheck {
   checkedAll: boolean;
   checkList = [];
   isInput: boolean;
+  roleCode: any;
   constructor(public data: DataService, public http: HttpService) {
     this.jyyCode = '';
     this.isInput = false;
+    this.roleCode = this.data.roleCode;
   }
 
   ngDoCheck() {
