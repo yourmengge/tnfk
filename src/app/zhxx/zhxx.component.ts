@@ -57,6 +57,7 @@ export class ZhxxComponent implements DoCheck {
       this.code = this.data.teamCode;
       this.checkId = '';
       this.userCode = this.data.userCode;
+      this.temp = '';
       this.search();
     }
   }
@@ -202,6 +203,8 @@ export class ZhxxComponent implements DoCheck {
     this.http.addJyy(data, type).subscribe((res) => {
       this.data.ErrorMsg(text + '成功');
       this.getList();
+      this.checkId = '';
+      this.temp = '';
       this.close();
     }, (err) => {
       this.data.error = err.error;
@@ -230,20 +233,7 @@ export class ZhxxComponent implements DoCheck {
     this.checkId = index;
     this.temp = data.accountCode;
     this.userCode = data.accountCode;
-    this.selectDetail = {
-      accountCode: data.accountCode,
-      accountCommission: this.numFormat(data.accountCommission),
-      accountName: data.accountName,
-      accountPwd: data.accountPwd,
-      flatLine: data.flatLine,
-      cordonLine: data.cordonLine,
-      cashScale: data.cashScale,
-      allottedScale: data.allottedScale,
-      productCode: data.productCode,
-      productName: data.productName,
-      accountStatus: data.accountStatus,
-      teamCode: this.code
-    };
+    this.selectDetail = Object.assign({ teamCode: this.code, accountCommission: this.numFormat(data.accountCommission) }, data);
   }
 
   numFormat(num) {
@@ -254,8 +244,7 @@ export class ZhxxComponent implements DoCheck {
     if (this.temp !== '') {
       this.alert = this.data.show;
       this.textType = '修改';
-      console.log(this.selectDetail);
-      this.accountDetail = this.selectDetail;
+      this.accountDetail = Object.assign({}, this.selectDetail);
     }
   }
 

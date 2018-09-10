@@ -251,10 +251,10 @@ export class FplbComponent implements DoCheck {
       data.accountCode = this.jyyCode;
       data.productCode = this.list[element].productCode;
       if (this.list[element].ghcp <= 0) {
-        this.data.ErrorMsg('归还股票数量必须大于0！');
+        this.data.ErrorMsg('归还资金必须大于0！');
         return temp = 1;
       } else if (this.list[element].ghcp > this.list[element].ableScale) {
-        this.data.ErrorMsg('归还股票数量不能大于股票数量！');
+        this.data.ErrorMsg('归还资金不能大于可分配资金！');
         return temp = 1;
       } else {
         data.ableScale = this.list[element].ghcp;

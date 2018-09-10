@@ -12,7 +12,7 @@ export class GhlbComponent extends GetListFn {
   public static = new StaticData();
   constructor(public data: DataService, public http: HttpService) {
     super(data, http);
-    this.confirmText = '确定归还团队？';
+    this.confirmText = '确定提盈？';
     this.url = this.static.GET_PRIVATE_HOLD;
   }
 
@@ -85,10 +85,10 @@ export class GhlbComponent extends GetListFn {
       };
       data.accountCode = this.list[element].accountCode;
       if (this.list[element].bcgh <= 0) {
-        this.data.ErrorMsg('归还股票数量必须大于0！');
+        this.data.ErrorMsg('提盈资金必须大于0！');
         return temp = 1;
       } else if (this.list[element].bcgh > this.list[element].ableCnt) {
-        this.data.ErrorMsg('归还股票数量不能大于可归还数量！');
+        this.data.ErrorMsg('提盈资金不能大于可提盈资金！');
         return temp = 1;
       } else {
         data.liftScale = this.list[element].bcgh;
@@ -102,7 +102,7 @@ export class GhlbComponent extends GetListFn {
 
   submit(type) {
     if (type) {
-      this.http.coupon({ list: this.array }).subscribe((res) => {
+      this.http.coupon2({ list: this.array }).subscribe((res) => {
         this.data.ErrorMsg('提交成功');
         this.checkList = [];
         this.list = [];

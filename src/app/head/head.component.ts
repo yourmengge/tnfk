@@ -25,6 +25,8 @@ export class HeadComponent implements OnInit {
   logout(text) {
     this.data.ErrorMsg(text);
     this.data.userCode = '';
+    this.data.teamCode = '';
+    this.data.productCode = '';
     this.data.removeSession('token');
     this.data.goto('/');
   }

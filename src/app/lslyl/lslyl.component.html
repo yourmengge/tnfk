@@ -1,13 +1,15 @@
 <div class="">
   <div class="search-div history-search">
-    <span *ngIf='url === "tdgl"'>投顾账户</span>
-    <input *ngIf='url === "tdgl"' type="text" [(ngModel)]='historyKeyWord.accountCode'>
-    <span>交易日期</span>
-    <input type="month" [(ngModel)]='historyKeyWord.selectMonth'>
-    <button class="button" (click)='getList()'>查询</button>
-    <button (click)='export()'>导出列表</button>
+    <span>投顾账户</span>
+    <input type="text" [(ngModel)]='historyKeyWord.accountCode'>
+    <span>交易开始日期</span>
+    <input type="date" [(ngModel)]='historyKeyWord.beginTime'>
+    <span>交易结束日期</span>
+    <input type="date" [(ngModel)]='historyKeyWord.endTime'>
+    <button [disabled]='disabled(historyKeyWord.accountCode)' class="button" (click)='getList()'>查询</button>
+    <button [disabled]='disabled(historyKeyWord.accountCode)' (click)='export()'>导出列表</button>
   </div>
-  <div class="table-div my-scroll" *ngIf='url === "tdgl"'>
+  <div class="table-div my-scroll">
     <table class="my-table">
       <tr>
         <th>
@@ -71,56 +73,6 @@
         </td>
         <td>
           {{a.dealAmount}}
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div class="table-div my-scroll" *ngIf='url === "cpgl"'>
-    <table class="my-table">
-      <tr>
-        <th>
-          产品编号
-        </th>
-        <th>
-          股票代码
-        </th>
-        <th>
-          股票名称
-        </th>
-        <th>
-          盈亏日期
-        </th>
-        <th>
-          盈亏值
-        </th>
-        <th>
-          手续费
-        </th>
-        <th>
-          利用率
-        </th>
-      </tr>
-      <tr *ngFor='let a of list'>
-        <td>
-          {{a.productCode}}
-        </td>
-        <td>
-          {{a.stockCode}}
-        </td>
-        <td>
-          {{a.stockName}}
-        </td>
-        <td>
-          {{a.profitDate | date}}
-        </td>
-        <td>
-          {{a.profitLoss | round}}
-        </td>
-        <td>
-          {{a.commissPrice | round}}
-        </td>
-        <td>
-          {{a.coefficient}}
         </td>
       </tr>
     </table>

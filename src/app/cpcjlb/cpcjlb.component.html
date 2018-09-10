@@ -6,6 +6,9 @@
     <table class="my-table">
       <tr>
         <th>
+          序号
+        </th>
+        <th>
           成交时间
         </th>
         <th>
@@ -44,6 +47,9 @@
       </tr>
       <tr *ngFor='let a of list;let i = index' class="{{a.appointTypeDesc === '买入'?'red':'green'}}">
         <td>
+          {{i + 1}}
+        </td>
+        <td>
           {{a.dealTime}}
         </td>
         <td>
@@ -68,7 +74,7 @@
           {{a.dealAvrPrice}}
         </td>
         <td>
-          {{a.productCode}}
+          {{a.teamCode}}
         </td>
         <td>
           {{a.productCode}}
