@@ -163,10 +163,10 @@ export class ZhxxComponent implements DoCheck {
         this.data.ErrorMsg('投顾账号不能为中文和特殊字符，只能是数字字母下划线');
       } else if (this.accountDetail.accountPwd === '') {
         this.data.ErrorMsg('投顾密码不能为空');
-      } else if (this.data.isNull(this.accountDetail.allottedScale)) {
-        this.data.ErrorMsg('期初规模必填且只能为数字');
-      } else if (this.data.isNull(this.accountDetail.cashScale)) {
-        this.data.ErrorMsg('保证金必填且只能为数字');
+      } else if (this.data.isNull(this.accountDetail.allottedScale) || this.data.Decimal(this.accountDetail.allottedScale) > 2) {
+        this.data.ErrorMsg('期初规模必填且只能为数字，且不能超过两位小数');
+      } else if (this.data.isNull(this.accountDetail.cashScale) || this.data.Decimal(this.accountDetail.cashScale) > 2) {
+        this.data.ErrorMsg('保证金必填且只能为数字，且不能超过两位小数');
       } else if (this.data.isNull(this.accountDetail.flatLine) || this.accountDetail.flatLine < 0 || this.accountDetail.flatLine > 1) {
         this.data.ErrorMsg('平仓线比例必填且只能为0-1的数字');
         // tslint:disable-next-line:max-line-length
