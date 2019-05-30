@@ -6,7 +6,7 @@ export class GetListFn implements DoCheck {
     isSort: boolean;
     sortType: any;
     sortName: any;
-    list: any;
+    list = [];
     searchCode: any;
     proName: any;
     deleteData: any;
@@ -74,7 +74,7 @@ export class GetListFn implements DoCheck {
             teamCode: this.code,
             accountCode: this.searchCode
         };
-        this.http.getList(this.url, this.listData).subscribe((res) => {
+        this.http.getList(this.url, this.listData).subscribe((res: Array<any>) => {
             this.list = res;
             if (this.isSort) {
                 this.sort(this.sortName);
@@ -127,7 +127,7 @@ export class GetListFn implements DoCheck {
             teamCode: this.code,
             accountCode: this.searchCode
         };
-        this.http.getList(this.url, this.listData).subscribe((res) => {
+        this.http.getList(this.url, this.listData).subscribe((res: Array<any>) => {
             for (const i in res) {
                 if (this.data.isNullArray(this.list)) { // 判断是否为第一次获取到数据
                     res[i].bcgh = res[i].backableScale;

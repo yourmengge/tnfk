@@ -25,13 +25,16 @@ export class CclbComponent extends GetListFn {
   stockHQ: any;
   accountName: any;
   stompClient: any;
+  lockScale: any;
   stockName: string;
   connectStatus: boolean;
+  confirm = false;
   constructor(public data: DataService, public http: HttpService, public activeRoute: ActivatedRoute) {
     super(data, http);
     this.resetAlert = this.data.hide;
     this.fullcount = 0;
     this.stockHQ = this.data.stockHQ;
+    this.lockScale = this.data.getSession('lockScale');
     this.connectStatus = false;
     this.accountName = this.activeRoute.snapshot.params['id'].split('-')[1];
     this.accountCode = this.activeRoute.snapshot.params['id'].split('-')[0];
@@ -41,6 +44,26 @@ export class CclbComponent extends GetListFn {
   sortList(name) {
     this.sortType = !this.sortType;
     super.sort(name);
+  }
+
+  closeALL() {
+    this.confirmText = '确定一键平仓？';
+    this.confirm = true;
+  }
+  submitDelete(type) {
+    if (type) {
+      this.http.closeALL(this.accountCode).subscribe(res => {
+        this.data.ErrorMsg('提交成功');
+        this.confirm = false;
+        this.getList();
+      }, (err) => {
+        this.data.error = err.error;
+        this.data.isError();
+      });
+    } else {
+      this.confirm = false;
+    }
+
   }
 
   sell(a) {

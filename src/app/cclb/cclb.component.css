@@ -19,7 +19,7 @@
     left: -250px;
     text-align: center;
     margin-top: 150px;
-    background: #ad3333;
+    background: #3186c7;
     color: #fff;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .input {
-    border: solid 1px #b00e23;
+    border: solid 1px #49b0dc;
     font-size: 1.1rem;
     padding: 0 4px;
     width: 100%;
@@ -69,7 +69,7 @@
 .add-down div {
     border: none;
     color: #fff;
-    background: #b00e23;
+    background: #49b0dc;
     width: 46px;
     outline: none;
     font-size: 2rem;
@@ -80,7 +80,7 @@
 }
 
 .add-down div:active{
-    background: #910013
+    background: #3186c7
 }
 
 .green-left {
@@ -110,11 +110,11 @@
 
 .buy div {
     flex: 1;
-    background: #b00e23;
+    background: #49b0dc;
     color: #fff;
     height: 38px;
     line-height: 38px;
-    border: solid 1px #b00e23;
+    border: solid 1px #49b0dc;
     cursor: pointer;
 }
 

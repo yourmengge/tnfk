@@ -17,13 +17,12 @@ input[type=number] {
     appearance: none;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
 .red {
-    color: #c31f20 !important;
+    color: #3186c7 !important;
 }
 
 .block {
@@ -60,9 +59,9 @@ input::-webkit-inner-spin-button {
 
 .search-div button {
     padding: 0px 20px;
-    background: #c31f20;
+    background: #3186c7;
     color: #fff;
-    border: solid 1px #c31f20;
+    border: solid 1px #3186c7;
     border-radius: 5px;
     font-size: 14px;
     height: 30px;
@@ -70,7 +69,7 @@ input::-webkit-inner-spin-button {
 }
 
 .search-div button:hover {
-    background: #aa1227;
+    background: #3186c7;
 }
 
 .search2 {
@@ -87,7 +86,7 @@ input::-webkit-inner-spin-button {
 
 .action-button button {
     margin-right: 10px;
-    background: #cc4545;
+    background: #49b0dc;
     border: none;
     height: 35px;
     padding: 0 20px;
@@ -97,7 +96,7 @@ input::-webkit-inner-spin-button {
 }
 
 .action-button button:hover {
-    background: #990f0f;
+    background: #3186c7;
 }
 
 .my-table {
@@ -109,8 +108,7 @@ input::-webkit-inner-spin-button {
     word-break: keep-all
 }
 
-.my-table th,
-.my-table td {
+.my-table th, .my-table td {
     padding: 0 30px;
     text-align: center;
     font-size: 14px;
@@ -194,7 +192,7 @@ input::-webkit-inner-spin-button {
 
 .active {
     background: rgb(245, 245, 245);
-    color: #c31f20 !important;
+    color: #3186c7 !important;
 }
 
 .select-acitve {
@@ -241,7 +239,6 @@ input::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
-
 /* 
 .tabs-div div:hover{
     background: #fff;
@@ -268,7 +265,7 @@ input::-webkit-inner-spin-button {
 
 .button-history {
     margin-right: 10px;
-    background: #cc4545;
+    background: #49b0dc;
     border: none;
     height: 35px;
     padding: 0 20px;
@@ -339,7 +336,7 @@ input:read-only {
 .my-confirm .title-div {
     height: 40px;
     line-height: 40px;
-    background: #ad3333;
+    background: #3186c7;
     color: #fff;
 }
 
@@ -360,7 +357,7 @@ input:read-only {
 }
 
 .button-div button:nth-child(1) {
-    background: #ad3333;
+    background: #3186c7;
     color: #fff;
 }
 
@@ -390,7 +387,7 @@ input:read-only {
     left: -200px;
     text-align: center;
     margin-top: 150px;
-    background: #ad3333;
+    background: #3186c7;
     color: #fff;
 }
 
@@ -401,6 +398,11 @@ input:read-only {
     margin-left: 171px;
     margin-top: 13px;
     cursor: pointer;
+}
+
+.sortIcon {
+    width: 12px;
+    margin-top: -4px;
 }
 
 @media screen and (max-width: 1440px) {

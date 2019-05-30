@@ -1,7 +1,7 @@
 .header {
   width: 100vw;
   height: 40px;
-  background: #c31f20;
+  background: #3186c7;
   line-height: 40px;
   color: #fff;
   text-align: right;
@@ -58,5 +58,5 @@
 }
 
 .second-menu:hover {
-  color: #d32c2c;
+  color: #3186c7;
 }

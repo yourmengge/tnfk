@@ -1,7 +1,7 @@
 
 
 .alert-div {
-    width: 500px;
+    width: 550px;
     height: 310;
     background: #fff;
     margin-left: 50%;
@@ -13,7 +13,7 @@
 }
 
 .alert-title {
-    width: 500px;
+    width: 550px;
     height: 50px;
     line-height: 50px;
     position: relative;
@@ -21,7 +21,7 @@
     left: -250px;
     text-align: center;
     margin-top: 150px;
-    background: #ad3333;
+    background: #3186c7;
     color: #fff;
 }
 
@@ -29,7 +29,7 @@
     float: right;
     width: 25px;
     position: absolute;
-    margin-left: 171px;
+    margin-left: 204px;
     margin-top: 13px;
     cursor: pointer;
 }
@@ -40,7 +40,7 @@
     line-height: 40px;
     margin-top: 10px;
     font-size: 14px;
-    width: 480px;
+    width: 535px;
 }
 
 .flex-name {

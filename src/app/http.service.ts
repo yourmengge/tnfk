@@ -4,8 +4,8 @@ import { DataService } from './data.service';
 import { Md5 } from 'ts-md5';
 @Injectable()
 export class HttpService {
-  public host = 'http://218.85.23.217:8082/tnproxy/';
-  // public host = 'http://101.132.65.124:10008/tnproxy/';
+  // public host = 'http://xxtg.hankuntech.com/tnproxy/';
+  public host = 'http://47.103.29.17/tnproxy/';
   public ws = this.host + 'webSocket';
   // public host = 'http://218.85.23.217:8082/tnproxy/';
   // public host = 'http://106.15.92.93:10008/tnproxy/';
@@ -233,5 +233,12 @@ export class HttpService {
  */
   refreshBalance(code) {
     return this.POST('tn/product/' + code + '/balance/refresh', {});
+  }
+
+  /**
+   * 一键平仓
+   */
+  closeALL(accountCode) {
+    return this.POST(`tn/appoint/SELLALL?accountCode=${accountCode}`, {});
   }
 }

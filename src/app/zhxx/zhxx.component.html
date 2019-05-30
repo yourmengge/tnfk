@@ -28,17 +28,16 @@
         <th>
           投顾状态
         </th>
-        <th>
-          交易佣金
-        </th>
-        <th>
-          所属产品
-        </th>
+       
         <th>
           期初规模(元)
         </th>
         <th>
           保证金(元)
+        </th>
+        <th (click)='sortList("remainCashScale","num")'>
+          剩余保证金
+          <img src="./assets/images/sort.png" alt="" class='sortIcon'>
         </th>
         <th>
           平仓线比例
@@ -46,21 +45,39 @@
         <th>
           警戒线比例
         </th>
+        <th (click)='sortList("residCashRate","num")'>
+          剩余保证金比例
+          <img src="./assets/images/sort.png" alt="" class='sortIcon'>
+        </th>
         <th>
           总资金
         </th>
         <th>
           可用资金
         </th>
-        <th>
+        <!-- <th>
           冻结资金
-        </th>
+        </th> -->
         <th>
           市值
         </th>
-        <th (click)='sortList()'>
+        <th (click)='sortList("profit","num")'>
           总盈亏
+          <img src="./assets/images/sort.png" alt="" class='sortIcon'>
         </th>
+        <th>
+          主板单票比例
+        </th>
+        <th>
+          创业板合计比例
+        </th>
+        <th>
+          交易佣金
+        </th>
+        <th>
+          所属产品
+        </th>
+       
         <th>
           在线状态
         </th>
@@ -81,17 +98,15 @@
         <!-- <td>
           {{a.bpLine}}
         </td> -->
-        <td>
-          {{a.accountCommission | numFormat}}
-        </td>
-        <td>
-          {{a.productName}}
-        </td>
+        
         <td>
           {{a.allottedScale}}
         </td>
         <td>
           {{a.cashScale}}
+        </td>
+        <td>
+          {{a.remainCashScale}}
         </td>
         <td>
           {{a.flatLine}}
@@ -100,20 +115,36 @@
           {{a.cordonLine}}
         </td>
         <td>
+          {{a.residCashRate}}
+        </td>
+        <td>
           {{a.totalScale}}
         </td>
         <td>
           {{a.ableScale}}
         </td>
-        <td>
+        <!-- <td>
           {{a.lockScale}}
-        </td>
+        </td> -->
         <td>
           {{a.marketValue}}
         </td>
         <td [class]='proFit(a.profit)'>
           {{a.profit}}
         </td>
+        <td>
+          {{a.mainSingleVote}}
+        </td>
+        <td>
+          {{a.growthSingleVote}}
+        </td>
+        <td>
+          {{a.accountCommission | numFormat}}
+        </td>
+        <td>
+          {{a.productName}}
+        </td>
+        
         <td class="{{a.onlineStatus === '在线'?'red':'block'}}">
           {{a.onlineStatus}}
         </td>
@@ -174,13 +205,13 @@
           期初规模(元)
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.allottedScale' [readonly]='textType === "修改"'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.allottedScale'>
         </div>
         <div class="flex-name">
           保证金(元)
         </div>
         <div class="flex-content">
-          <input type="number" appNumberInput [(ngModel)]='accountDetail.cashScale' [readonly]='textType === "修改"'>
+          <input type="number" appNumberInput [(ngModel)]='accountDetail.cashScale'>
         </div>
       </div>
       <div class="flex-alert">
@@ -195,6 +226,20 @@
         </div>
         <div class="flex-content">
           <input type="text" maxlength="9" appNumberInput [(ngModel)]='accountDetail.cordonLine'>
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          主板单票比例
+        </div>
+        <div class="flex-content">
+          <input type="text" maxlength="9" appNumberInput [(ngModel)]='accountDetail.mainSingleVote'>
+        </div>
+        <div class="flex-name">
+          创业板合计比例
+        </div>
+        <div class="flex-content">
+          <input type="text" maxlength="9" appNumberInput [(ngModel)]='accountDetail.growthSingleVote'>
         </div>
       </div>
       <div class="flex-alert">
@@ -215,6 +260,14 @@
         </div>
         <div class="flex-content" *ngIf='textType !== "修改"'>
           正常
+        </div>
+      </div>
+      <div class="flex-alert">
+        <div class="flex-name">
+          白名单
+        </div>
+        <div class="flex-content" style="flex:8">
+          <input type="text"  [(ngModel)]='stockList' placeholder="输入股票代码，用逗号隔开">
         </div>
       </div>
       <div class="button-div">

@@ -32,6 +32,10 @@ export class ZhxxComponent implements DoCheck {
   proList: any;
   isSort: boolean;
   sortType: boolean;
+  sortName: any;
+  sortData: any;
+  lockScale: any; // 冻结资金
+  stockList: any;
   constructor(public data: DataService, public http: HttpService) {
     this.initAccountDetail();
     this.confirmText = '确定结案投顾？';
@@ -81,7 +85,7 @@ export class ZhxxComponent implements DoCheck {
     this.http.getTeamMember(data).subscribe((res) => {
       this.list = res;
       if (this.isSort) {
-        this.sort();
+        this.sort(this.sortData, this.sortName);
       }
       this.data.settimeout = setTimeout(() => {
         this.getList();
@@ -131,8 +135,12 @@ export class ZhxxComponent implements DoCheck {
       productCode: '',
       cashScale: '',
       accountStatus: '',
-      teamCode: this.code
+      teamCode: this.code,
+      mainSingleVote: '',
+      growthSingleVote: '',
+      accDesc: ''
     };
+    this.stockList = '';
   }
 
   add() {
@@ -153,6 +161,7 @@ export class ZhxxComponent implements DoCheck {
   }
 
   addSubmit() {
+    this.accountDetail.accDesc = `stockList=${this.stockList};`;
     this.accountDetail.teamCode = this.code;
     if (this.textType === '新增') {
       if (this.accountDetail.accountCode === '') {
@@ -172,8 +181,14 @@ export class ZhxxComponent implements DoCheck {
         // tslint:disable-next-line:max-line-length
       } else if (this.data.isNull(this.accountDetail.cordonLine) || this.accountDetail.cordonLine < 0 || this.accountDetail.cordonLine > 1) {
         this.data.ErrorMsg('警戒线比例必填且只能为0-1的数字');
-      } else if (this.accountDetail.flatLine < this.accountDetail.cordonLine) {
-        this.data.ErrorMsg('平仓线比例必须大于等于警戒线比例');
+        // tslint:disable-next-line:max-line-length
+      } else if (this.data.isNull(this.accountDetail.mainSingleVote) || this.accountDetail.mainSingleVote < 0 || this.accountDetail.mainSingleVote > 1) {
+        this.data.ErrorMsg('主板单票比例必填且只能为0-1的数字');
+        // tslint:disable-next-line:max-line-length
+      } else if (this.data.isNull(this.accountDetail.growthSingleVote) || this.accountDetail.growthSingleVote < 0 || this.accountDetail.growthSingleVote > 1) {
+        this.data.ErrorMsg('创业板比例必填且只能为0-1的数字');
+      } else if (this.accountDetail.flatLine > this.accountDetail.cordonLine) {
+        this.data.ErrorMsg('平仓线比例必须小于等于警戒线比例');
       } else if (this.data.isNull(this.accountDetail.accountCommission)) {
         this.data.ErrorMsg('交易佣金必填且只能为数字');
       } else {
@@ -189,8 +204,8 @@ export class ZhxxComponent implements DoCheck {
         // tslint:disable-next-line:max-line-length
       } else if (this.data.isNull(this.accountDetail.cordonLine) || this.accountDetail.cordonLine < 0 || this.accountDetail.cordonLine > 1) {
         this.data.ErrorMsg('警戒线比例必填且只能为0-1的数字');
-      } else if (this.accountDetail.flatLine < this.accountDetail.cordonLine) {
-        this.data.ErrorMsg('平仓线比例必须大于等于警戒线比例');
+      } else if (this.accountDetail.flatLine > this.accountDetail.cordonLine) {
+        this.data.ErrorMsg('平仓线比例必须小于等于警戒线比例');
       } else if (this.data.isNull(this.accountDetail.accountCommission)) {
         this.data.ErrorMsg('交易佣金必填且只能为数字');
       } else {
@@ -204,6 +219,7 @@ export class ZhxxComponent implements DoCheck {
       this.data.ErrorMsg(text + '成功');
       this.getList();
       this.checkId = '';
+      this.stockList = '';
       this.temp = '';
       this.close();
     }, (err) => {
@@ -212,19 +228,30 @@ export class ZhxxComponent implements DoCheck {
     });
   }
 
-  sortList() {
+  sortList(data, type) {
     this.sortType = !this.sortType;
-    this.sort();
+    this.sortData = data;
+    this.sortName = type;
+    this.sort(this.sortData, this.sortName);
   }
 
-  sort() {
+  sort(data, type) {
     this.isSort = true;
     this.list.sort((a, b) => {
-      if (this.sortType) {
-        return (b.profit - a.profit);
+      if (type === 'num') {
+        if (this.sortType) {
+          return (b[data] - a[data]);
+        } else {
+          return (a[data] - b[data]);
+        }
       } else {
-        return (a.profit - b.profit);
+        if (this.sortType) {
+          return a[data].localeCompare(b[data]);
+        } else {
+          return b[data].localeCompare(a[data]);
+        }
       }
+
 
     });
   }
@@ -233,6 +260,7 @@ export class ZhxxComponent implements DoCheck {
     this.checkId = index;
     this.temp = data.accountCode;
     this.userCode = data.accountCode;
+    this.lockScale = data.lockScale;
     this.selectDetail = Object.assign({ teamCode: this.code, accountCommission: this.numFormat(data.accountCommission) }, data);
   }
 
@@ -244,26 +272,37 @@ export class ZhxxComponent implements DoCheck {
     if (this.temp !== '') {
       this.alert = this.data.show;
       this.textType = '修改';
+      this.stockList = this.selectDetail['accDesc'].split(';')[0].split('=')[1];
       this.accountDetail = Object.assign({}, this.selectDetail);
     }
   }
 
   tdColor(a) {
     const data = a;
-    if (data.profit < 0) {
-      if (Math.abs(data.profit) >= data.cashScale * data.flatLine) {
+    if (data.accountStatus > 1) {
+      if (data.accountStatus === 2) {
         return 'red';
-      }
-      if (Math.abs(data.profit) >= data.cashScale * data.cordonLine && Math.abs(data.profit) < data.cashScale * data.flatLine) {
+      } else if (data.accountStatus === 3) {
         return 'orange';
       }
     } else {
       return '';
     }
+    // if (data.profit < 0) {
+    //   if (Math.abs(data.profit) >= data.cashScale * data.flatLine) {
+    //     return 'red';
+    //   }
+    //   if (Math.abs(data.profit) >= data.cashScale * data.cordonLine && Math.abs(data.profit) < data.cashScale * data.flatLine) {
+    //     return 'orange';
+    //   }
+    // } else {
+    //   return '';
+    // }
   }
 
   cclb() {
     if (this.temp !== '') {
+      this.data.setSession('lockScale', this.lockScale);
       this.data.gotoId('main/tdgl/cclb', this.selectDetail.accountCode + '-' + this.selectDetail.accountName);
     }
   }
