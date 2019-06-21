@@ -56,7 +56,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     font-size: 14px;
     height: 28px;
 }
-
+.flex-content2-button,
 .search-div button {
     padding: 0px 20px;
     background: #3186c7;
@@ -65,9 +65,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     border-radius: 5px;
     font-size: 14px;
     height: 30px;
+    line-height: 30px;
     margin-right: 20px;
 }
 
+.flex-content2-button:hover,
 .search-div button:hover {
     background: #3186c7;
 }
@@ -284,7 +286,7 @@ input:read-only {
 
 .alert-div {
     width: 400px;
-    max-height: 500px;
+    max-height: 550px;
     display: flex;
     background: #fff;
     margin-left: 50%;
@@ -403,6 +405,16 @@ input:read-only {
 .sortIcon {
     width: 12px;
     margin-top: -4px;
+}
+
+.textarea{
+    width: 100%;
+    resize: none;
+    border: solid 1px #ccc;
+    border-radius: 3px;
+    padding: 0 3px;
+    line-height: 22px;
+    height: 82px;
 }
 
 @media screen and (max-width: 1440px) {

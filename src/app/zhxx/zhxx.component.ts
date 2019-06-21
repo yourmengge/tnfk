@@ -35,7 +35,9 @@ export class ZhxxComponent implements DoCheck {
   sortName: any;
   sortData: any;
   lockScale: any; // 冻结资金
-  stockList: any;
+  stockList: string;
+  textFile: any;
+  witheStockCode: any;
   constructor(public data: DataService, public http: HttpService) {
     this.initAccountDetail();
     this.confirmText = '确定结案投顾？';
@@ -150,6 +152,23 @@ export class ZhxxComponent implements DoCheck {
     this.getProList();
   }
 
+  addStock(witheStockCode) {
+    if (!this.stockList.includes(witheStockCode) && !this.data.isNull(witheStockCode)) { // 新增股票时判断是否存在
+      // 判断stocklist是否为空，为空等白名单代码，否则加上逗号
+      this.stockList = this.stockList === '' ? witheStockCode : `${this.stockList},${witheStockCode}`;
+    }
+  }
+
+  delStock() {
+    if (this.stockList.includes(this.witheStockCode) && !this.data.isNull(this.witheStockCode)) { // 删除股票时判断是否存在
+      if (this.stockList.split(',').length === 1) { // stockList只有一个值
+        this.stockList = '';
+      } else { // 有多个值时，将股票号码和前面的逗号替换成空
+        this.stockList = this.stockList.replace(`,${this.witheStockCode}`, '');
+      }
+    }
+  }
+
   getProList() {
     this.http.getTeamProList(this.data.teamCode).subscribe((res) => {
       this.proList = res;
@@ -160,8 +179,23 @@ export class ZhxxComponent implements DoCheck {
     });
   }
 
+  upload(e) {
+    const file = e.target.files[0];
+    if (!this.data.isNull(file)) {
+      const reader = new FileReader();
+      reader.readAsText(file, 'gb231');
+      reader.onload = (res) => {
+        const list = res.target['result'].split(/\n/);
+        list.forEach(element => {
+          this.addStock(element);
+        });
+        this.textFile = '';
+      };
+    }
+  }
+
   addSubmit() {
-    this.accountDetail.accDesc = `stockList=${this.stockList};`;
+    this.accountDetail.accDesc = `stocklist=${this.stockList};`;
     this.accountDetail.teamCode = this.code;
     if (this.textType === '新增') {
       if (this.accountDetail.accountCode === '') {
@@ -194,6 +228,7 @@ export class ZhxxComponent implements DoCheck {
       } else {
         this.accountDetail.accountStatus = 0;
         // accountData.accountPwd = Md5.hashStr(accountData.accountPwd);
+        console.log(this.accountDetail);
         this.submit(this.accountDetail, 'ADD', '添加');
       }
     } else {

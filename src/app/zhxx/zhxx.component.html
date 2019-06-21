@@ -163,13 +163,13 @@
           投顾账号
         </div>
         <div class="flex-content">
-          <input type="text" [(ngModel)]='accountDetail.accountCode' [readonly]='textType === "修改"'>
+          <input  type="text" [(ngModel)]='accountDetail.accountCode' [readonly]='textType === "修改"'>
         </div>
         <div class="flex-name">
           投顾名字
         </div>
         <div class="flex-content">
-          <input type="text" [(ngModel)]='accountDetail.accountName'>
+          <input  type="text" [(ngModel)]='accountDetail.accountName'>
         </div>
       </div>
       <div class="flex-alert">
@@ -262,12 +262,16 @@
           正常
         </div>
       </div>
-      <div class="flex-alert">
+      <div class="flex-alert" style="height:170px">
         <div class="flex-name">
           白名单
         </div>
-        <div class="flex-content" style="flex:8">
-          <input type="text"  [(ngModel)]='stockList' placeholder="输入股票代码，用逗号隔开">
+        <div style="flex:8" >
+          <input appNumberInput class="flex-content2-input" type="text" [(ngModel)]="witheStockCode" placeholder="请输入股票代码">
+          <button (click)='addStock(witheStockCode)' class="flex-content2-button">新增</button>
+          <button (click)='delStock()' class="flex-content2-button" style="background:#c32e2e;border-color:#c32e2e;">删除</button>
+          <input type="file" name="" id="" (change)='upload($event)' [(ngModel)]="textFile" style="font-size: smaller;line-height: normal;">
+          <textarea class="textarea" type="text"  [(ngModel)]='stockList' placeholder="输入股票代码，用逗号隔开"></textarea>
         </div>
       </div>
       <div class="button-div">
