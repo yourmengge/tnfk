@@ -156,6 +156,7 @@ export class ZhxxComponent implements DoCheck {
     if (!this.stockList.includes(witheStockCode) && !this.data.isNull(witheStockCode)) { // 新增股票时判断是否存在
       // 判断stocklist是否为空，为空等白名单代码，否则加上逗号
       this.stockList = this.stockList === '' ? witheStockCode : `${this.stockList},${witheStockCode}`;
+      this.witheStockCode = '';
     }
   }
 
