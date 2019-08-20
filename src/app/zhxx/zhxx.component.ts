@@ -186,8 +186,10 @@ export class ZhxxComponent implements DoCheck {
       const reader = new FileReader();
       reader.readAsText(file, 'gb231');
       reader.onload = (res) => {
-        const list = res.target['result'].split(/\n/);
+        const resData = res.target['result'];
+        const list = resData.split(/\n/);
         list.forEach(element => {
+          element = element.replace(/\s+/g, '');
           this.addStock(element);
         });
         this.textFile = '';
